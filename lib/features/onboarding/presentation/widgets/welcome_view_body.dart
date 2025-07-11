@@ -1,0 +1,218 @@
+import 'package:bank_system/core/themeing/colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class WelcomeViewBody extends StatefulWidget {
+  const WelcomeViewBody({super.key});
+
+  @override
+  State<WelcomeViewBody> createState() => _WelcomeViewBodyState();
+}
+
+class _WelcomeViewBodyState extends State<WelcomeViewBody> {
+  PageController pageController = PageController();
+  int currentIndex = 0;
+
+  List<Map<String, dynamic>> pages = [
+    {
+      'icon': Icons.security,
+      'title': 'Secure Banking',
+      'description': 'Your money is protected with bank-level security and advanced encryption technology.',
+    },
+    {
+      'icon': Icons.flash_on,
+      'title': 'Fast Transactions',
+      'description': 'Transfer and receive money instantly with zero waiting time.',
+    },
+    {
+      'icon': Icons.analytics,
+      'title': 'Smart Analytics',
+      'description': 'Track your expenses and manage your finances effectively.',
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            PageView.builder(
+              controller: pageController,
+              onPageChanged: (index) {
+                setState(() {
+                  currentIndex = index;
+                });
+              },
+              itemCount: pages.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 40.h),
+                      // Skip Button
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: 50.h,
+                              width: 50.h,
+                              decoration: BoxDecoration(
+                               borderRadius: BorderRadius.circular(15.r),
+                                color: maincolor,
+                              ),
+                              child: Center(
+                                child: Text('🏦'
+                                  , textAlign: TextAlign.center
+                                    , style: TextStyle(fontSize: 24.sp, color: Colors.white)),
+                              ),
+                              ),
+                            Align(
+                              alignment: Alignment.topRight,
+                              child: currentIndex != pages.length - 1
+                                  ? Container(
+                                      height: 40.h,
+                                      width: 80.w,
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[200],
+                                        borderRadius: BorderRadius.circular(10.r),
+                                      ),
+                                    child: TextButton(
+                                        onPressed: () {
+                                          pageController.jumpToPage(pages.length - 1);
+                                        },
+                                        child: Text("Skip",
+                                            style: TextStyle(
+                                              color: maincolor,
+                                              fontSize: 18.sp,
+                                            )),
+                                      ),
+                                  )
+                                  : SizedBox(),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      // Icon Circle
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            height: 250.w,
+                            width: 250.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: maincolor.withOpacity(0.2),
+                            ),
+                          ),
+                          Container(
+                            height: 150.w,
+                            width: 150.w,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: maincolor,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: maincolor.withOpacity(0.4),
+                                  blurRadius: 20,
+                                  spreadRadius: 5,
+                                ),
+                              ],
+                            ),
+                            child: Icon(
+                              pages[index]['icon'],
+                              color: Colors.white,
+                              size: 60.w,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 40.h),
+                      // Title
+                      Text(
+                        pages[index]['title'],
+                        style: TextStyle(
+                          fontSize: 30.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 10.h),
+                      // Description
+                      Text(
+                        pages[index]['description'],
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          color: Colors.grey[700],
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 40.h),
+                      // Page Indicators
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: List.generate(
+                          pages.length,
+                          (indicatorIndex) => AnimatedContainer(
+                            duration: Duration(milliseconds: 300),
+                            margin: EdgeInsets.symmetric(horizontal: 5.w),
+                            height: 10.h,
+                            width: currentIndex == indicatorIndex ? 25.w : 10.w,
+                            decoration: BoxDecoration(
+                              color: currentIndex == indicatorIndex
+                                  ? maincolor
+                                  : Colors.grey[300],
+                              borderRadius: BorderRadius.circular(5.r),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+
+            // Bottom Next button
+            Positioned(
+              bottom: 10.h,
+              left: 20.w,
+              right: 20.w,
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 15.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                    ),
+                    backgroundColor: maincolor,
+                  ),
+                  onPressed: () {
+                    if (currentIndex < pages.length - 1) {
+                      pageController.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                      );
+                    } else {
+                      // Finish onboarding
+                      print("Onboarding Finished");
+                    }
+                  },
+                  child: Text(
+                    currentIndex == pages.length - 1 ? "Start" : "Next",
+                    style: TextStyle(fontSize: 18.sp, color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
