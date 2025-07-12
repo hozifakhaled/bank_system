@@ -91,7 +91,7 @@ class SignupUserViewBody extends StatelessWidget {
                 const SizedBox(height: 20),
                 DatePickerField( onDateSelected: (date) {
     context.read<SignupUserCubit>().dateOfBirth.text = date;
-  },),
+  }, label: 'Date of Birth',),
                 const SizedBox(height: 20),
                 Row(
                   children:  [

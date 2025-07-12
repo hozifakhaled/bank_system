@@ -5,8 +5,9 @@ import 'package:intl/intl.dart';
 
 class DatePickerField extends StatefulWidget {
   final void Function(String)? onDateSelected;
+  final String label;
 
-  const DatePickerField({Key? key, this.onDateSelected}) : super(key: key);
+  const DatePickerField({Key? key, this.onDateSelected, required this.label}) : super(key: key);
 
   @override
   State<DatePickerField> createState() => _DatePickerFieldState();
@@ -43,7 +44,7 @@ class _DatePickerFieldState extends State<DatePickerField> {
       child: AbsorbPointer(
         child: TextFormField(
           decoration: InputDecoration(
-            hintText: _selectedDate ?? 'Date of Birth',
+        hintText: _selectedDate ?? widget.label,
             suffixIcon: const Icon(Icons.calendar_today),
             border: const OutlineInputBorder(),
           ),
