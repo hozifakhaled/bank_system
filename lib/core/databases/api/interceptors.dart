@@ -1,3 +1,4 @@
+import 'package:bank_system/core/databases/cache/cache_helper.dart';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
@@ -17,9 +18,13 @@ class LoggerInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  final token = CacheHelper().getData(key: 'token');
+    if (token != null && token.isNotEmpty) {
+      options.headers['Authorization'] = 'Bearer $token';
+    }
     final requestPath = '${options.baseUrl}${options.path}';
-    logger.i('${options.method} request ==> $requestPath'); //Info log
-    handler.next(options); // continue with the Request
+    logger.i('${options.method} request ==> $requestPath');
+    handler.next(options);
   }
 
   @override
