@@ -9,7 +9,7 @@ class WelcomeView extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        body:  WelcomeViewBody()
+        body:  WelcomeViewBody(),
       ),
     );
   }

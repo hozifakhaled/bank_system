@@ -9,15 +9,21 @@ class WelcomeViewBody extends StatefulWidget {
   State<WelcomeViewBody> createState() => _WelcomeViewBodyState();
 }
 
-class _WelcomeViewBodyState extends State<WelcomeViewBody> {
+class _WelcomeViewBodyState extends State<WelcomeViewBody>
+    with SingleTickerProviderStateMixin {
   PageController pageController = PageController();
   int currentIndex = 0;
+
+  late AnimationController _animationController;
+  late Animation<Offset> _slideAnimation;
+  late Animation<double> _fadeAnimation;
 
   List<Map<String, dynamic>> pages = [
     {
       'icon': Icons.security,
       'title': 'Secure Banking',
-      'description': 'Your money is protected with bank-level security and advanced encryption technology.',
+      'description':
+          'Your money is protected with bank-level security and advanced encryption technology.',
     },
     {
       'icon': Icons.flash_on,
@@ -32,6 +38,42 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 600));
+
+    _slideAnimation = Tween<Offset>(
+      begin: Offset(0, 0.3),
+      end: Offset.zero,
+    ).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeOut));
+
+    _fadeAnimation = Tween<double>(
+      begin: 0,
+      end: 1,
+    ).animate(
+        CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
+
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    pageController.dispose();
+    super.dispose();
+  }
+
+  void animatePageChange(int index) {
+    _animationController.reset();
+    setState(() {
+      currentIndex = index;
+    });
+    _animationController.forward();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -40,9 +82,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
             PageView.builder(
               controller: pageController,
               onPageChanged: (index) {
-                setState(() {
-                  currentIndex = index;
-                });
+                animatePageChange(index);
               },
               itemCount: pages.length,
               itemBuilder: (context, index) {
@@ -51,7 +91,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
                   child: Column(
                     children: [
                       SizedBox(height: 40.h),
-                      // Skip Button
+                      // Skip Button with bank icon
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Row(
@@ -61,95 +101,106 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
                               height: 50.h,
                               width: 50.h,
                               decoration: BoxDecoration(
-                               borderRadius: BorderRadius.circular(15.r),
+                                borderRadius: BorderRadius.circular(15.r),
                                 color: maincolor,
                               ),
                               child: Center(
-                                child: Text('🏦'
-                                  , textAlign: TextAlign.center
-                                    , style: TextStyle(fontSize: 24.sp, color: Colors.white)),
+                                child: Text('🏦',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        fontSize: 24.sp, color: Colors.white)),
                               ),
-                              ),
-                            Align(
-                              alignment: Alignment.topRight,
-                              child: currentIndex != pages.length - 1
-                                  ? Container(
-                                      height: 40.h,
-                                      width: 80.w,
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[200],
-                                        borderRadius: BorderRadius.circular(10.r),
-                                      ),
-                                    child: TextButton(
-                                        onPressed: () {
-                                          pageController.jumpToPage(pages.length - 1);
-                                        },
-                                        child: Text("Skip",
-                                            style: TextStyle(
-                                              color: maincolor,
-                                              fontSize: 18.sp,
-                                            )),
-                                      ),
-                                  )
-                                  : SizedBox(),
                             ),
+                            currentIndex != pages.length - 1
+                                ? Container(
+                                    height: 40.h,
+                                    width: 80.w,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(10.r),
+                                    ),
+                                    child: TextButton(
+                                      onPressed: () {
+                                        pageController.jumpToPage(
+                                            pages.length - 1);
+                                      },
+                                      child: Text("Skip",
+                                          style: TextStyle(
+                                            color: maincolor,
+                                            fontSize: 18.sp,
+                                          )),
+                                    ),
+                                  )
+                                : SizedBox(),
                           ],
                         ),
                       ),
                       SizedBox(height: 20.h),
-                      // Icon Circle
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Container(
-                            height: 250.w,
-                            width: 250.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: maincolor.withOpacity(0.2),
-                            ),
-                          ),
-                          Container(
-                            height: 150.w,
-                            width: 150.w,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: maincolor,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: maincolor.withOpacity(0.4),
-                                  blurRadius: 20,
-                                  spreadRadius: 5,
+                      // Icon Circle with Slide & Fade Animation
+                      SlideTransition(
+                        position: _slideAnimation,
+                        child: FadeTransition(
+                          opacity: _fadeAnimation,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              Container(
+                                height: 250.w,
+                                width: 250.w,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: maincolor.withOpacity(0.2),
                                 ),
-                              ],
-                            ),
-                            child: Icon(
-                              pages[index]['icon'],
-                              color: Colors.white,
-                              size: 60.w,
-                            ),
+                              ),
+                              Container(
+                                height: 150.w,
+                                width: 150.w,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: maincolor,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: maincolor.withOpacity(0.4),
+                                      blurRadius: 20,
+                                      spreadRadius: 5,
+                                    ),
+                                  ],
+                                ),
+                                child: Icon(
+                                  pages[index]['icon'],
+                                  color: Colors.white,
+                                  size: 60.w,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                       SizedBox(height: 40.h),
                       // Title
-                      Text(
-                        pages[index]['title'],
-                        style: TextStyle(
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.bold,
+                      FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Text(
+                          pages[index]['title'],
+                          style: TextStyle(
+                            fontSize: 30.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 10.h),
                       // Description
-                      Text(
-                        pages[index]['description'],
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: Colors.grey[700],
+                      FadeTransition(
+                        opacity: _fadeAnimation,
+                        child: Text(
+                          pages[index]['description'],
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            color: Colors.grey[700],
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 40.h),
                       // Page Indicators
@@ -199,7 +250,6 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody> {
                         curve: Curves.easeIn,
                       );
                     } else {
-                      // Finish onboarding
                       print("Onboarding Finished");
                     }
                   },
