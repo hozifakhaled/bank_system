@@ -1,6 +1,8 @@
+import 'package:bank_system/core/routing/routes.dart';
 import 'package:bank_system/core/themeing/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class WelcomeViewBody extends StatefulWidget {
   const WelcomeViewBody({super.key});
@@ -28,32 +30,33 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
     {
       'icon': Icons.flash_on,
       'title': 'Fast Transactions',
-      'description': 'Transfer and receive money instantly with zero waiting time.',
+      'description':
+          'Transfer and receive money instantly with zero waiting time.',
     },
     {
       'icon': Icons.analytics,
       'title': 'Smart Analytics',
-      'description': 'Track your expenses and manage your finances effectively.',
+      'description':
+          'Track your expenses and manage your finances effectively.',
     },
   ];
 
   @override
   void initState() {
     super.initState();
-    _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 600));
+    _animationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 600),
+    );
 
-    _slideAnimation = Tween<Offset>(
-      begin: Offset(0, 0.3),
-      end: Offset.zero,
-    ).animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.easeOut));
+    _slideAnimation = Tween<Offset>(begin: Offset(0, 0.3), end: Offset.zero)
+        .animate(
+          CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+        );
 
-    _fadeAnimation = Tween<double>(
-      begin: 0,
-      end: 1,
-    ).animate(
-        CurvedAnimation(parent: _animationController, curve: Curves.easeIn));
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeIn),
+    );
 
     _animationController.forward();
   }
@@ -76,6 +79,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Stack(
           children: [
@@ -105,10 +109,14 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                                 color: maincolor,
                               ),
                               child: Center(
-                                child: Text('🏦',
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        fontSize: 24.sp, color: Colors.white)),
+                                child: Text(
+                                  '🏦',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 24.sp,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
                             ),
                             currentIndex != pages.length - 1
@@ -122,13 +130,16 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                                     child: TextButton(
                                       onPressed: () {
                                         pageController.jumpToPage(
-                                            pages.length - 1);
+                                          pages.length - 1,
+                                        );
                                       },
-                                      child: Text("Skip",
-                                          style: TextStyle(
-                                            color: maincolor,
-                                            fontSize: 18.sp,
-                                          )),
+                                      child: Text(
+                                        "Skip",
+                                        style: TextStyle(
+                                          color: maincolor,
+                                          fontSize: 18.sp,
+                                        ),
+                                      ),
                                     ),
                                   )
                                 : SizedBox(),
@@ -250,9 +261,10 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                         curve: Curves.easeIn,
                       );
                     } else {
-                      print("Onboarding Finished");
+                      GoRouter.of(context).push(Routes.signupasuser);
                     }
                   },
+
                   child: Text(
                     currentIndex == pages.length - 1 ? "Start" : "Next",
                     style: TextStyle(fontSize: 18.sp, color: Colors.white),
