@@ -15,17 +15,25 @@ class LoggerInterceptor extends Interceptor {
         'Error message: ${err.message}'); //Debug log
     handler.next(err); //Continue with the Error
   }
+@override
+void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
+  final path = options.path;
 
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-  final token = CacheHelper().getData(key: 'token');
+  // ✅ تجاهل التوكن في المسارات اللي مش محتاجة توثيق
+  if (!(path.contains("/api/register") || path.contains("/auth"))) {
+    final token = CacheHelper().getData(key: 'token');
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';
     }
-    final requestPath = '${options.baseUrl}${options.path}';
-    logger.i('${options.method} request ==> $requestPath');
-    handler.next(options);
   }
+
+  final requestPath = '${options.baseUrl}${options.path}';
+  logger.i('${options.method} request ==> $requestPath');
+  logger.w('Headers: ${options.headers}');
+
+  handler.next(options);
+}
+
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {

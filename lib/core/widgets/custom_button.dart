@@ -10,12 +10,24 @@ class CustomButton extends StatelessWidget {
   final void Function()? onTap;
   final Widget? child;
   final FontWeight? fontWeight;
-  const CustomButton({super.key,  this.text, this.onTap, this.bordercolor, this.textcolor, this.buttonbodycolor, this.fontWeight, this.child,});
+  final bool isLoading;
+
+  const CustomButton({
+    super.key,
+    this.text,
+    this.onTap,
+    this.bordercolor,
+    this.textcolor,
+    this.buttonbodycolor,
+    this.fontWeight,
+    this.child,
+    this.isLoading = false, // الافتراضي: غير مفعل
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTap: isLoading ? null : onTap, // منع الضغط أثناء التحميل
       child: Container(
         width: double.infinity,
         height: 50.h,
@@ -24,17 +36,27 @@ class CustomButton extends StatelessWidget {
           color: buttonbodycolor ?? maincolor,
           borderRadius: BorderRadius.circular(16),
         ),
-        child:child?? Center(
-          child: Text(
-            text??'',
-            style: TextStyle(
-              color: textcolor ?? Colors.white,
-              fontSize: 16.sp,
-              fontWeight:fontWeight?? FontWeight.bold,
-            ),
-          ),
+        child: Center(
+          child: isLoading
+              ? SizedBox(
+                  width: 22.w,
+                  height: 22.h,
+                  child: const CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: Colors.white,
+                  ),
+                )
+              : child ??
+                  Text(
+                    text ?? '',
+                    style: TextStyle(
+                      color: textcolor ?? Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: fontWeight ?? FontWeight.bold,
+                    ),
+                  ),
         ),
       ),
-      );
+    );
   }
 }

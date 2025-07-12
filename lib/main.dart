@@ -1,10 +1,16 @@
+import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/routing/app_routing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setup(); // ✅ لازم يكون await لأن setup فيها Future
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

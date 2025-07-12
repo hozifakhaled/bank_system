@@ -8,3 +8,16 @@ abstract class SignupUserState extends Equatable {
 }
 
 class SignupUserInitial extends SignupUserState {}
+
+class SignupUserLoading extends SignupUserState {}
+
+class SignupUserError extends SignupUserState {
+  final String message;
+  const SignupUserError(this.message);
+}
+
+class SignupUserSuccess extends SignupUserState {
+  final SignupUserResponseEntity signupUserResponseEntity;
+  const SignupUserSuccess(this.signupUserResponseEntity);
+
+}

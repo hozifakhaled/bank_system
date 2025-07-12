@@ -17,8 +17,8 @@ class _GenderDropdownState extends State<GenderDropdown> {
     return DropdownButtonFormField<String>(
       value: selectedGender,
       items: const [
-        DropdownMenuItem(value: 'Male', child: Text('Male')),
-        DropdownMenuItem(value: 'Female', child: Text('Female')),
+        DropdownMenuItem(value: 'MALE', child: Text('MALE')),
+        DropdownMenuItem(value: 'FEMALE', child: Text('FEMALE')),
       ],
       onChanged: (value) {
         setState(() => selectedGender = value);

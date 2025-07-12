@@ -1,3 +1,4 @@
+
 import 'package:bank_system/core/databases/api/dio_consumer.dart';
 import 'package:bank_system/core/databases/api/endpoints.dart';
 import 'package:bank_system/core/errors/failure.dart';
@@ -16,7 +17,7 @@ class SignupUserRepositoryImpli implements SignupUserRepository {
   final response = await dioConsumer.post(path: Endpoints.signupUser, data: signupUserModel.toJson());
   return response.fold(
     (l) => Left(Failure(errMessage: l.toString())),
-    (r) => Right(SignupUserResponseModel.fromJson(r.data)),
+  (r) => Right(SignupUserResponseModel.fromJson(r.data)), // ✅ هنا
   );
 } on Exception catch (e) {
   return Left(Failure(errMessage: e.toString()));}
