@@ -94,7 +94,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
                   child: Column(
                     children: [
-                      SizedBox(height: 40.h),
+                     SizedBox(height: 20.h),
                       // Skip Button with bank icon
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -102,8 +102,8 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Container(
-                              height: 50.h,
-                              width: 50.h,
+                              height: 40.h,
+                              width: 40.h,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15.r),
                                 color: maincolor,
@@ -113,35 +113,27 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                                   '🏦',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                    fontSize: 24.sp,
+                                    fontSize: 20.sp,
                                     color: Colors.white,
                                   ),
                                 ),
                               ),
                             ),
                             currentIndex != pages.length - 1
-                                ? Container(
-                                    height: 40.h,
-                                    width: 80.w,
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius: BorderRadius.circular(10.r),
+                                ? TextButton(
+                                  onPressed: () {
+                                    pageController.jumpToPage(
+                                      pages.length - 1,
+                                    );
+                                  },
+                                  child: Text(
+                                    "Skip",
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 18.sp,
                                     ),
-                                    child: TextButton(
-                                      onPressed: () {
-                                        pageController.jumpToPage(
-                                          pages.length - 1,
-                                        );
-                                      },
-                                      child: Text(
-                                        "Skip",
-                                        style: TextStyle(
-                                          color: maincolor,
-                                          fontSize: 18.sp,
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                  ),
+                                )
                                 : SizedBox(),
                           ],
                         ),
@@ -180,7 +172,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                                 child: Icon(
                                   pages[index]['icon'],
                                   color: Colors.white,
-                                  size: 60.w,
+                                  size: 40.w,
                                 ),
                               ),
                             ],
@@ -194,7 +186,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                         child: Text(
                           pages[index]['title'],
                           style: TextStyle(
-                            fontSize: 30.sp,
+                            fontSize: 25.sp,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
@@ -207,7 +199,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                         child: Text(
                           pages[index]['description'],
                           style: TextStyle(
-                            fontSize: 16.sp,
+                            fontSize: 14.sp,
                             color: Colors.grey[700],
                           ),
                           textAlign: TextAlign.center,
@@ -222,8 +214,8 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                           (indicatorIndex) => AnimatedContainer(
                             duration: Duration(milliseconds: 300),
                             margin: EdgeInsets.symmetric(horizontal: 5.w),
-                            height: 10.h,
-                            width: currentIndex == indicatorIndex ? 25.w : 10.w,
+                            height: 7.h,
+                            width: currentIndex == indicatorIndex ? 20.w : 10.w,
                             decoration: BoxDecoration(
                               color: currentIndex == indicatorIndex
                                   ? maincolor
@@ -241,7 +233,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
 
             // Bottom Next button
             Positioned(
-              bottom: 10.h,
+              bottom: 30.h,
               left: 20.w,
               right: 20.w,
               child: SizedBox(
