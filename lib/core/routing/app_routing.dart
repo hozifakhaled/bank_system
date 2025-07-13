@@ -1,6 +1,7 @@
 import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/routing/routes.dart';
 import 'package:bank_system/features/home/presentation/pages/choice_account_type.dart';
+import 'package:bank_system/features/home/presentation/pages/home_current_view.dart';
 import 'package:bank_system/features/onboarding/presentation/pages/welcome_view.dart';
 import 'package:bank_system/features/splash/presentation/pages/splash_view.dart';
 import 'package:bank_system/features/user_auth/signup_user/presentation/cubit/signup_user_cubit.dart';
@@ -17,7 +18,7 @@ class AppRouting {
     routes: <GoRoute>[
       GoRoute(
         path: Routes.splah,
-        builder: (context, state) => const SplashView(),
+        builder: (context, state) => const HomeCurrentView(),
       ),
 
       GoRoute(

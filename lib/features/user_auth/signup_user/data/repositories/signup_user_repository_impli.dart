@@ -17,7 +17,7 @@ class SignupUserRepositoryImpli implements SignupUserRepository {
   final response = await dioConsumer.post(path: Endpoints.signupUser, data: signupUserModel.toJson());
   return response.fold(
     (l) => Left(Failure(errMessage: l.toString())),
-  (r) => Right(SignupUserResponseModel.fromJson(r.data)), // ✅ هنا
+  (r) => Right(SignupUserResponseModel.fromJson(r.data)),  
   );
 } on Exception catch (e) {
   return Left(Failure(errMessage: e.toString()));}
