@@ -104,7 +104,7 @@ class ChoiceAccountTypeViewBody extends StatelessWidget {
                         end: Alignment.bottomRight,
                       ),
                       onTap: () {
-                        // navigate to current account
+                      
                       },
                     ),
                     const SizedBox(height: 20),

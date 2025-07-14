@@ -1,6 +1,6 @@
 import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/themeing/colors.dart';
-import 'package:bank_system/features/home/presentation/cubit/home_cubit.dart';
+import 'package:bank_system/features/home/presentation/manegar/home_cubit/home_cubit.dart';
 import 'package:bank_system/features/home/presentation/widgets/quick_action_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
