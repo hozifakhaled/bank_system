@@ -3,6 +3,7 @@ import 'package:bank_system/core/routing/routes.dart';
 import 'package:bank_system/features/home/presentation/pages/choice_account_type.dart';
 import 'package:bank_system/features/home/presentation/pages/home_current_view.dart';
 import 'package:bank_system/features/onboarding/presentation/pages/welcome_view.dart';
+import 'package:bank_system/features/splash/presentation/pages/splash_view.dart';
 import 'package:bank_system/features/user_auth/signup_user/presentation/cubit/signup_user_cubit.dart';
 import 'package:bank_system/features/user_auth/signup_user/presentation/pages/choice_user.dart';
 import 'package:bank_system/features/user_auth/signup_user/presentation/pages/signup_user_view.dart';
@@ -36,6 +37,10 @@ class AppRouting {
         builder: (context, state) => const ChoiceAccountType(),
       ),
       GoRoute(path: Routes.choiceuser, builder: (context, state) => const ChoiceUser()),
+      GoRoute(
+        path: Routes.home,
+        builder: (context, state) => const HomeCurrentView(),
+      ),
     ],
   );
 }

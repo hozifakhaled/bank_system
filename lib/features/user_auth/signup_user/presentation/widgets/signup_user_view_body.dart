@@ -141,7 +141,7 @@ class SignupUserViewBody extends StatelessWidget {
   builder: (context, state) {
    if (state is SignupUserSuccess) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    GoRouter.of(context).push(Routes.choiceaccounttype);
+    GoRouter.of(context).push(Routes.home);
   });
 }
 

@@ -5,4 +5,5 @@ class Routes {
   static const String signupasEmplyer= '/signupasEmplyer';
   static const String choiceuser = '/choiceuser';
   static const String choiceaccounttype = '/choiceaccounttype';
+  static const String home = '/home';
 }

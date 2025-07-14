@@ -2,6 +2,12 @@ import 'package:bank_system/core/connections/network_info.dart';
 import 'package:bank_system/core/databases/api/dio_consumer.dart';
 import 'package:bank_system/core/databases/api/interceptors.dart';
 import 'package:bank_system/core/databases/cache/cache_helper.dart';
+import 'package:bank_system/features/home/data/datasource/categories_data_source_local.dart';
+import 'package:bank_system/features/home/data/datasource/categories_data_source_remote.dart';
+import 'package:bank_system/features/home/data/repositires/home_repositiry_impli.dart';
+import 'package:bank_system/features/home/domain/repositres/home_repositrey.dart';
+import 'package:bank_system/features/home/domain/usecases/category_usecase.dart';
+import 'package:bank_system/features/home/presentation/cubit/home_cubit.dart';
 import 'package:bank_system/features/user_auth/signup_user/data/repositories/signup_user_repository_impli.dart';
 import 'package:bank_system/features/user_auth/signup_user/domain/repositories/signup_user_repositry.dart';
 import 'package:bank_system/features/user_auth/signup_user/domain/usecases/signup_user_usecase.dart';
@@ -15,8 +21,10 @@ final sl = GetIt.instance;
 
 Future<void> setup() async {
   final sharedPreferences = await SharedPreferences.getInstance();
-  CacheHelper.sharedPreferences = sharedPreferences; // ⬅️ دي اللي ناسيها غالباً
+  CacheHelper.sharedPreferences = sharedPreferences;
+
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+  sl.registerLazySingleton<CacheHelper>(() => CacheHelper()); // ⬅️ السطر المهم
 
   sl.registerLazySingleton<LoggerInterceptor>(() => LoggerInterceptor());
 
@@ -30,8 +38,26 @@ Future<void> setup() async {
   sl.registerLazySingleton(() => Connectivity());
 
   sl.registerLazySingleton<SignupUserRepository>(
-      () => SignupUserRepositoryImpli(dioConsumer: sl()));
-  sl.registerLazySingleton(
-      () => SignupUserUsecase(signupUserRepository: sl()));
+    () => SignupUserRepositoryImpli(dioConsumer: sl()),
+  );
+
+  sl.registerLazySingleton<CategoriesDataSourceLocal>(
+    () => CategoriesDataSourceLocal(cache: sl()), // الآن CacheHelper موجود
+  );
+
+  sl.registerLazySingleton<CategoriesDataSourceRemote>(
+    () => CategoriesDataSourceRemote(dioConsumer: sl()),
+  );
+
+  sl.registerLazySingleton<HomeRepository>(() => HomeRepositiryImpli(
+    networkInfo: sl(),
+    remote: sl(),
+    local: sl(),
+  ));
+
+  sl.registerLazySingleton(() => CategoryUsecase(categoryRepository: sl()));
+  sl.registerFactory(() => HomeCubit(sl()));
+
+  sl.registerLazySingleton(() => SignupUserUsecase(signupUserRepository: sl()));
   sl.registerFactory(() => SignupUserCubit(sl()));
 }
