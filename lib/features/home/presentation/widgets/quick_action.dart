@@ -14,21 +14,30 @@ class QuickActions extends StatelessWidget {
     return SizedBox(
       height: 100.h,
       child: BlocProvider(
-        create: (context) => sl<HomeCubit>(),
-        child: ListView.builder(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-          scrollDirection: Axis.horizontal,
-          itemCount: 4,
-          itemBuilder: (BuildContext context, int index) {
-            // Replace data dynamically if needed
-            return Padding(
-              padding: EdgeInsets.only(right: 10.w),
-              child: QuickActionItem(
-                icon: Icons.send,
-                label: "Transfer",
-                iconColor: maincolor,
-              ),
+        create: (context) => sl<HomeCubit>()..getCategories(),
+        child: BlocBuilder<HomeCubit, HomeState>(
+          builder: (context, state) {
+            if (state is HomeLoaded) {
+              return ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+              scrollDirection: Axis.horizontal,
+              itemCount: state.categories.length,
+              itemBuilder: (BuildContext context, int index) {
+                // Replace data dynamically if needed
+                return Padding(
+                  padding: EdgeInsets.only(right: 10.w),
+                  child: QuickActionItem(
+                    icon: state.categories[index].image,
+                    label: state.categories[index].categoryName,
+                    iconColor: maincolor,
+                  ),
+                );
+              },
             );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+            
           },
         ),
       ),

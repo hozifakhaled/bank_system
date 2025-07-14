@@ -20,7 +20,7 @@ void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
   final path = options.path;
 
   // ✅ تجاهل التوكن في المسارات اللي مش محتاجة توثيق
-  if (!(path.contains("/api/register") || path.contains("/auth"))) {
+  if (!(path.contains("/api/register") || path.contains("/auth") || path.contains("/Categories"))) {
     final token = CacheHelper().getData(key: 'token');
     if (token != null && token.isNotEmpty) {
       options.headers['Authorization'] = 'Bearer $token';

@@ -20,17 +20,14 @@ class HomeRepositiryImpli implements HomeRepository {
   final DioConsumer dioConsumer;
   final CategoriesDataSourceLocal local;
 
-  HomeRepositiryImpli(this.dioConsumer, {
-    required this.networkInfo,
-    required this.remote,
-    required this.local,
-  });
+  HomeRepositiryImpli({required this.networkInfo, required this.remote, required this.local});
+
 
   @override
   Future<Either<Failure, List<CategoryModel>>> getCategories() async {
     try {
       final localCate = await local.getLastCategories();
-      unawaited(_updateCategories()); // لا تؤثر على النتيجة مباشرةً
+   unawaited  ( _updateCategories()); // لا تؤثر على النتيجة مباشرةً
       return right(localCate);
     } catch (_) {
       // إذا فشل الـ local نحاول عبر الـ remote
@@ -49,38 +46,14 @@ class HomeRepositiryImpli implements HomeRepository {
       }
     }
   }
-
-  Future<void> _updateCategories() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteModel = await remote.getAllCategories();
-        await local.cacheCategories(remoteModel);
-      } catch (_) {
-        // تجاهل الخطأ بصمت أو سجل لو حبيت
-      }
+Future<void> _updateCategories() async {
+  if (await networkInfo.isConnected) {
+    try {
+      final remoteModel = await remote.getAllCategories();
+      await local.cacheCategories(remoteModel );
+    } catch (_) {
+      // تجاهل الخطأ بصمت أو سجل لو حبيت
     }
   }
-
-  @override
-  Future<Either<Failure, AccountEntity>> addAccount(String accountType) async {
-    final response = await dioConsumer.post(
-      path: Endpoints.accounts,
-      data: {"accountType": accountType},
-    );
-    return response.fold(
-      (error) {
-        throw ServerException(
-          ErrorModel(status: 500, errorMessage: "خطأ في الاتصال: $error"),
-        );
-      },
-      (response) {
-        final data = response.data;
-        if (data is Map<String, dynamic>) {
-          return right(AccountModel.fromJson(data));
-        } else {
-          throw Exception("شكل البيانات غير صحيح");
-        }
-      },
-    );
-  }
+}
 }
