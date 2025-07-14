@@ -96,20 +96,6 @@ class ChoiceUserViewBody extends StatelessWidget {
                      GoRouter.of(context).push(Routes.signupasuser);
                     },
                   ),
-                  const SizedBox(height: 24),
-                  RoleCard(
-                    icon: Icons.business_center_outlined,
-                    title: 'Employer',
-                    subtitle: 'For employee or company access',
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF8B5CF6), Color(0xFF6366F1)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    onTap: () {
-                       GoRouter.of(context).push(Routes.signupasEmplyer);
-                    },
-                  ),
                 ],
               ),
             ),
