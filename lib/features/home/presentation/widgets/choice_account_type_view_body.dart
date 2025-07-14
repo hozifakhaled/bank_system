@@ -22,16 +22,29 @@ class ChoiceAccountTypeViewBody extends StatelessWidget {
           child: Column(
             children: [
               // Header Section with Welcome
-            Column(
-
+              ClipPath(
+                clipper: TopCurveClipper(),
+                child: Container(
+                  height: size.height * 0.35,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 5),
+                      ),
+                    ],
+                  ),
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 30,),
                       // Welcome Section
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color:Colors.white,
+                          color: const Color(0xFF6366F1).withOpacity(0.1),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
@@ -44,7 +57,7 @@ class ChoiceAccountTypeViewBody extends StatelessWidget {
                       Text(
                         'Welcome Back!',
                         style: TextStyle(
-                          color:Colors.white,
+                          color: const Color(0xFF2D3748),
                           fontSize: isSmallScreen ? 26 : 32,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 0.5,
@@ -54,7 +67,7 @@ class ChoiceAccountTypeViewBody extends StatelessWidget {
                       Text(
                         'Ahmed Mohamed', // يمكن تغييرها للاسم الديناميكي
                         style: TextStyle(
-                          color: Colors.white,
+                          color: const Color(0xFF6366F1),
                           fontSize: isSmallScreen ? 18 : 22,
                           fontWeight: FontWeight.w600,
                         ),
@@ -63,7 +76,7 @@ class ChoiceAccountTypeViewBody extends StatelessWidget {
                       Text(
                         'Select Account Type',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.grey[600],
                           fontSize: isSmallScreen ? 14 : 16,
                           fontWeight: FontWeight.w400,
                         ),
@@ -71,8 +84,10 @@ class ChoiceAccountTypeViewBody extends StatelessWidget {
                       ),
                     ],
                   ),
-                
-                   const Spacer(flex: 1),
+                ),
+              ),
+      
+              const Spacer(flex: 1),
       
               // Account Type Cards
               Padding(
