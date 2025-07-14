@@ -1,3 +1,4 @@
+import 'package:bank_system/core/databases/cache/cache_helper.dart';
 import 'package:bank_system/core/routing/routes.dart';
 import 'package:bank_system/core/widgets/custom_button.dart';
 import 'package:bank_system/core/widgets/custom_textfield.dart';
@@ -141,7 +142,8 @@ class SignupUserViewBody extends StatelessWidget {
   builder: (context, state) {
    if (state is SignupUserSuccess) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    GoRouter.of(context).push(Routes.home);
+    CacheHelper.sharedPreferences.setString('token', state.signupUserResponseEntity.token);
+    GoRouter.of(context).push(Routes.choiceaccounttype);
   });
 }
 

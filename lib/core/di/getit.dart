@@ -6,8 +6,10 @@ import 'package:bank_system/features/home/data/datasource/categories_data_source
 import 'package:bank_system/features/home/data/datasource/categories_data_source_remote.dart';
 import 'package:bank_system/features/home/data/repositires/home_repositiry_impli.dart';
 import 'package:bank_system/features/home/domain/repositres/home_repositrey.dart';
+import 'package:bank_system/features/home/domain/usecases/add_account_usecase.dart';
 import 'package:bank_system/features/home/domain/usecases/category_usecase.dart';
-import 'package:bank_system/features/home/presentation/cubit/home_cubit.dart';
+import 'package:bank_system/features/home/presentation/manegar/cubit/add_account_cubit.dart';
+import 'package:bank_system/features/home/presentation/manegar/home_cubit/home_cubit.dart';
 import 'package:bank_system/features/user_auth/signup_user/data/repositories/signup_user_repository_impli.dart';
 import 'package:bank_system/features/user_auth/signup_user/domain/repositories/signup_user_repositry.dart';
 import 'package:bank_system/features/user_auth/signup_user/domain/usecases/signup_user_usecase.dart';
@@ -50,13 +52,18 @@ Future<void> setup() async {
   );
 
   sl.registerLazySingleton<HomeRepository>(() => HomeRepositiryImpli(
+    sl(),
     networkInfo: sl(),
+    
     remote: sl(),
     local: sl(),
   ));
 
   sl.registerLazySingleton(() => CategoryUsecase(categoryRepository: sl()));
+    sl.registerLazySingleton(() => AddAccountUsecase( sl()));
+
   sl.registerFactory(() => HomeCubit(sl()));
+  sl.registerFactory(() => AddAccountCubit(sl()));
 
   sl.registerLazySingleton(() => SignupUserUsecase(signupUserRepository: sl()));
   sl.registerFactory(() => SignupUserCubit(sl()));
