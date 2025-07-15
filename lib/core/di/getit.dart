@@ -9,7 +9,6 @@ import 'package:bank_system/features/home/domain/repositres/home_repositrey.dart
 import 'package:bank_system/features/home/domain/usecases/add_account_usecase.dart';
 import 'package:bank_system/features/home/domain/usecases/category_usecase.dart';
 import 'package:bank_system/features/home/domain/usecases/deposit_usecase.dart';
-import 'package:bank_system/features/home/domain/usecases/withdarw_usecase.dart';
 import 'package:bank_system/features/home/presentation/manegar/cubit/add_account_cubit.dart';
 import 'package:bank_system/features/home/presentation/manegar/deposit_cubit/cubit/deposit_cubit.dart';
 import 'package:bank_system/features/home/presentation/manegar/home_cubit/home_cubit.dart';
@@ -63,15 +62,15 @@ Future<void> setup() async {
 
   sl.registerLazySingleton(() => CategoryUsecase(categoryRepository: sl()));
     sl.registerLazySingleton(() => AddAccountUsecase( sl()));
-    sl.registerLazySingleton(() => WithdarwUsecase( sl()));
 
     sl.registerLazySingleton(() => DepositUsecase( sl()));
 
   sl.registerFactory(() => HomeCubit(sl()));
   sl.registerFactory(() => AddAccountCubit(sl()));
+  sl.registerFactory(() => AddAccountCubit(sl()));
 
   sl.registerLazySingleton(() => SignupUserUsecase(signupUserRepository: sl()));
   sl.registerFactory(() => SignupUserCubit(sl()));
 
-   sl.registerFactory(() => DepositCubit(sl(), sl()));
+   sl.registerFactory(() => DepositCubit(sl(),sl()));
 }
