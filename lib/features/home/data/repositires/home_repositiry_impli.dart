@@ -92,27 +92,58 @@ class HomeRepositiryImpli implements HomeRepository {
     );
   }
 
+ 
 @override
   Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
   final response = await dioConsumer.post(
     path: Endpoints.deposit,
     data: {"amount": amount},
   );
+Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
+  try {
+    final result = await dioConsumer.post(
+      path: Endpoints.deposit,
+      data: {"amount": amount},
+    );
 
-  return response.fold(
-    (error) {
-      throw ServerException(
-        ErrorModel(status: 500, errorMessage: "Failed: $error"),
-      );
-    },
-    (response) {
-      // ✅ تحويل String إلى Map
-      final decodedJson = json.decode(response.data.toString());
+    return result.fold(
+      (error) {
+        throw ServerException(
+          ErrorModel(status: 500, errorMessage: "Failed: $error"),
+        );
+      },
+      (response) {
+        try {
+          final raw = response.data;
 
-      final deposit = DepositModel.fromJson(decodedJson);
-      return right(deposit);
-    },
-  );
+          // تحقق من إذا كانت البيانات فاضية
+          if (raw == null || raw.toString().trim().isEmpty) {
+            throw ServerException(
+              ErrorModel(status: 500, errorMessage: "Empty response from server"),
+            );
+          }
+
+          // فك البيانات حسب النوع
+          final Map<String, dynamic> decoded = raw is String
+              ? json.decode(raw)
+              : raw as Map<String, dynamic>;
+
+          final deposit = DepositModel.fromJson(decoded);
+          return right(deposit);
+
+        } catch (e) {
+          print("Error parsing response: $e");
+          print("Raw response: ${response.data}");
+          throw ServerException(
+            ErrorModel(status: 500, errorMessage: "Failed to parse response: $e"),
+          );
+        }
+      },
+    );
+  } catch (e) {
+    print("General error in createDeposit: $e");
+    return left(Failure(errMessage: e.toString()));
+  }
 }
 
   @override
