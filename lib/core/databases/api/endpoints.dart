@@ -4,4 +4,5 @@ class Endpoints {
   static const String accounts = "api/accounts";
   static const String categories = "Categories";
   static const String deposit = "api/deposits/createDeposit";
+  static const String withdraw = "api/Withdraw";
 }

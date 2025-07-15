@@ -11,4 +11,5 @@ class DepositUsecase {
   Future<Either<Failure, DepositEntity>> call(double amount) {
     return homeRepository.createDeposit(amount);
   }
+  
 }

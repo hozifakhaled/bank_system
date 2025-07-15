@@ -92,7 +92,8 @@ class HomeRepositiryImpli implements HomeRepository {
     );
   }
 
-Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
+@override
+  Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
   final response = await dioConsumer.post(
     path: Endpoints.deposit,
     data: {"amount": amount},
@@ -113,5 +114,24 @@ Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
     },
   );
 }
+
+  @override
+  Future<Either<Failure, DepositModel>> withdraw(double amount) async{
+    final response = await dioConsumer.post(
+      path: Endpoints.withdraw,
+      data: {"amount": amount},
+    );
+    return response.fold(
+      (error) {
+        throw ServerException(
+          ErrorModel(status: 500, errorMessage: "خطأ في الاتصال: $error"),
+        );
+      },
+      (response) {
+        final data = response.data;
+          return right(DepositModel.fromJson(data));
+      },
+    );
+  }
 }
 

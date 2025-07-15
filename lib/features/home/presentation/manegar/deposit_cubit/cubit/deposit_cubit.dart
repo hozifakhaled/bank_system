@@ -17,4 +17,6 @@ class DepositCubit extends Cubit<DepositState> {
     final result = await depositUsecase(amount);
     result.fold((failure) => emit(DepositError(failure.errMessage)), (deposit) => emit(DepositSuccess(deposit)));
   }
+
+  
 }
