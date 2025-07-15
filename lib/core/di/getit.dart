@@ -63,15 +63,15 @@ Future<void> setup() async {
 
   sl.registerLazySingleton(() => CategoryUsecase(categoryRepository: sl()));
     sl.registerLazySingleton(() => AddAccountUsecase( sl()));
-    sl.registerLazySingleton(() => WithdarwUsecase( sl()));
 
     sl.registerLazySingleton(() => DepositUsecase( sl()));
 
   sl.registerFactory(() => HomeCubit(sl()));
   sl.registerFactory(() => AddAccountCubit(sl()));
+  sl.registerFactory(() => WithdarwUsecase(sl()));
 
   sl.registerLazySingleton(() => SignupUserUsecase(signupUserRepository: sl()));
   sl.registerFactory(() => SignupUserCubit(sl()));
 
-   sl.registerFactory(() => DepositCubit(sl(), sl()));
+   sl.registerFactory(() => DepositCubit(sl(),sl()));
 }
