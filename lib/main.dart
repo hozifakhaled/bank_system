@@ -7,7 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await setup(); // ✅ لازم يكون await لأن setup فيها Future
+  await setup(); 
+  // ✅ لازم يكون await لأن setup فيها Future
   runApp(const MyApp());
 }
 
