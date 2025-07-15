@@ -2,6 +2,7 @@ import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/routing/routes.dart';
 import 'package:bank_system/features/home/data/model/deposit_model.dart';
 import 'package:bank_system/features/home/domain/entites/deposit_entity.dart';
+import 'package:bank_system/features/home/presentation/pages/balane_view.dart';
 import 'package:bank_system/features/home/presentation/pages/choice_account_type.dart';
 import 'package:bank_system/features/home/presentation/pages/home_current_view.dart';
 import 'package:bank_system/features/home/presentation/widgets/show_deposit_and_withdraw_data.dart';
@@ -42,6 +43,10 @@ class AppRouting {
        GoRoute(
         path: Routes.dataDepositAndWithdraw,
         builder: (context, state) => ShowDepositAndWithdrawData (deposit: state.extra as DepositModel,),
+      ),
+       GoRoute(
+        path: Routes.balance,
+        builder: (context, state) => BalanceView (),
       ),
       GoRoute(path: Routes.choiceuser, builder: (context, state) => const ChoiceUser()),
       GoRoute(

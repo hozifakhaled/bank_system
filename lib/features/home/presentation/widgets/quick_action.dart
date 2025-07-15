@@ -1,4 +1,5 @@
 import 'package:bank_system/core/di/getit.dart';
+import 'package:bank_system/core/routing/routes.dart';
 import 'package:bank_system/core/themeing/colors.dart';
 import 'package:bank_system/features/home/presentation/manegar/deposit_cubit/cubit/deposit_cubit.dart';
 import 'package:bank_system/features/home/presentation/manegar/home_cubit/home_cubit.dart';
@@ -8,6 +9,7 @@ import 'package:bank_system/features/home/presentation/widgets/quick_action_item
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class QuickActions extends StatelessWidget {
   const QuickActions({super.key});
@@ -59,6 +61,9 @@ class QuickActions extends StatelessWidget {
         child: const CustomBottomSheetWithdraw(),
       ),
     );
+  }
+   if (index == 2) {
+    GoRouter.of(context).push(Routes.balance);
   }
 },
                       child: QuickActionItem(

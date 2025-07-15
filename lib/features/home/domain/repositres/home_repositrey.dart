@@ -9,5 +9,6 @@ abstract class HomeRepository {
   Future<Either<Failure, AccountEntity>> addAccount(String accountType);
   Future<Either<Failure, DepositEntity>> createDeposit(double amount);
   Future<Either<Failure, DepositEntity>> withdraw(double amount);
+  Future<Either<Failure, double>> balance();
 
 }

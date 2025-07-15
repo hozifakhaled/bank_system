@@ -184,5 +184,23 @@ Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
 }  catch (e) {
     return left(Failure(errMessage: e.toString()));}
   }
+  
+  @override
+  Future<Either<Failure, double>> balance() async{
+    final response = await dioConsumer.get(path: Endpoints.balance);
+    return response.fold(
+      (error) {
+        throw ServerException(
+          ErrorModel(status: 500, errorMessage: "Failed: $error"),
+        );
+      },
+      (response) {
+        final data = response.data['balance'];
+        return right(data);
+      },
+    );
+  }
+
+  
 }
 
