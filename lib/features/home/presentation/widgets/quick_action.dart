@@ -1,5 +1,6 @@
 import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/themeing/colors.dart';
+import 'package:bank_system/features/home/presentation/manegar/deposit_cubit/cubit/deposit_cubit.dart';
 import 'package:bank_system/features/home/presentation/manegar/home_cubit/home_cubit.dart';
 import 'package:bank_system/features/home/presentation/widgets/custom_bottom_sheet.dart';
 import 'package:bank_system/features/home/presentation/widgets/quick_action_item.dart';
@@ -27,19 +28,23 @@ class QuickActions extends StatelessWidget {
                   return Padding(
                     padding: EdgeInsets.only(right: 10.w),
                     child: InkWell(
-                      onTap: () {
-                        if (index == 1) {
-                          showModalBottomSheet(
-                            context: context,
-                              isScrollControlled: true, // ✅ مهم عشان ياخد مساحة أكبر
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-                            ),
-                            builder: (context) => const CustomBottomSheet(),
-                          );
-                        
-                        }
-                      },
+                      onTap: () async {
+  if (index == 1) {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) => BlocProvider(
+        create: (context) => sl<DepositCubit>(),
+        child: const CustomBottomSheet(),
+      ),
+    );
+  }
+},
                       child: QuickActionItem(
                         icon: state.categories[index].image,
                         label: state.categories[index].categoryName,

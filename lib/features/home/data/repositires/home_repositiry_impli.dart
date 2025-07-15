@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:bank_system/core/connections/network_info.dart';
 import 'package:bank_system/core/databases/api/dio_consumer.dart';
@@ -10,6 +11,7 @@ import 'package:bank_system/features/home/data/datasource/categories_data_source
 import 'package:bank_system/features/home/data/datasource/categories_data_source_remote.dart';
 import 'package:bank_system/features/home/data/model/account_model.dart';
 import 'package:bank_system/features/home/data/model/category_model.dart';
+import 'package:bank_system/features/home/data/model/deposit_model.dart';
 import 'package:bank_system/features/home/domain/entites/accounts_entity.dart';
 import 'package:bank_system/features/home/domain/repositres/home_repositrey.dart';
 import 'package:dartz/dartz.dart';
@@ -89,5 +91,27 @@ class HomeRepositiryImpli implements HomeRepository {
       },
     );
   }
+
+Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
+  final response = await dioConsumer.post(
+    path: Endpoints.deposit,
+    data: {"amount": amount},
+  );
+
+  return response.fold(
+    (error) {
+      throw ServerException(
+        ErrorModel(status: 500, errorMessage: "Failed: $error"),
+      );
+    },
+    (response) {
+      // ✅ تحويل String إلى Map
+      final decodedJson = json.decode(response.data.toString());
+
+      final deposit = DepositModel.fromJson(decodedJson);
+      return right(deposit);
+    },
+  );
+}
 }
 
