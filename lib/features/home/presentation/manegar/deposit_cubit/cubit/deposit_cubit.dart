@@ -22,7 +22,7 @@ class DepositCubit extends Cubit<DepositState> {
   }
    Future<void> withdraw(double amount) async {
     emit(DepositLoading());
-    final result = await depositUsecase(amount);
+    final result = await withdrawUsecase(amount);
     result.fold((failure) => emit(DepositError(failure.errMessage)), (deposit) => emit(DepositSuccess(deposit)));
   }
 

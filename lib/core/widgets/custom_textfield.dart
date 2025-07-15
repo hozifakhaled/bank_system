@@ -17,6 +17,7 @@ class CustomTextformfield extends StatelessWidget {
  final int? minLines;
  final Widget? prefix;
   final Widget? prefixIcon;
+  final FocusNode? focusNode;
   const CustomTextformfield({
     super.key,
     this.prefix,
@@ -33,7 +34,7 @@ class CustomTextformfield extends StatelessWidget {
     this.hintStyle,
     this.color,
     this.colorborder,
-    this.border, this.minLines,
+    this.border, this.minLines, this.focusNode,
   });
 
   @override
@@ -41,7 +42,7 @@ class CustomTextformfield extends StatelessWidget {
     final inputBorder = border ?? buildBorder();
 
     return TextFormField(
-      
+      focusNode: focusNode,
       minLines: maxLines,
       controller: controller,
       obscureText: obscureText ?? false,

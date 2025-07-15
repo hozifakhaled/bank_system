@@ -143,43 +143,46 @@ Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
 
   @override
   Future<Either<Failure, DepositModel>> withdraw(double amount) async{
-    final response = await dioConsumer.post(
-      path: Endpoints.withdraw,
-      data: {"amount": amount},
-    );
-    return response.fold(
-      (error) {
+    try {
+  final response = await dioConsumer.post(
+    path: Endpoints.withdraw,
+    data: {"amount": amount},
+  );
+  return response.fold(
+     (error) {
         throw ServerException(
-          ErrorModel(status: 500, errorMessage: "خطأ في الاتصال: $error"),
+          ErrorModel(status: 500, errorMessage: "Failed: $error"),
         );
       },
-      (response) {
-         try {
-          final raw = response.data;
-
-          // تحقق من إذا كانت البيانات فاضية
-          if (raw == null || raw.toString().trim().isEmpty) {
-            throw ServerException(
-              ErrorModel(status: 500, errorMessage: "Empty response from server"),
-            );
-          }
-
-          // فك البيانات حسب النوع
-          final Map<String, dynamic> decoded = raw is String
-              ? json.decode(raw)
-              : raw as Map<String, dynamic>;
-
-          final deposit = DepositModel.fromJson(decoded);
-          return right(deposit);
-
-        } catch (e) {
-       
+    (response) {
+       try {
+        final raw = response.data;
+  
+        // تحقق من إذا كانت البيانات فاضية
+        if (raw == null || raw.toString().trim().isEmpty) {
+          throw ServerException(
+            ErrorModel(status: 500, errorMessage: "Empty response from server"),
+          );
+        }
+  
+        // فك البيانات حسب النوع
+        final Map<String, dynamic> decoded = raw is String
+            ? json.decode(raw)
+            : raw as Map<String, dynamic>;
+  
+        final withdraw = DepositModel.fromJson(decoded);
+        return right(withdraw);
+  
+      } catch (e) {
+         
           throw ServerException(
             ErrorModel(status: 500, errorMessage: "Failed to parse response: $e"),
           );
         }
-      },
-    );
+    },
+  );
+}  catch (e) {
+    return left(Failure(errMessage: e.toString()));}
   }
 }
 

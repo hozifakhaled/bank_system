@@ -6,15 +6,37 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class CustomBottomSheetDiposit extends StatelessWidget {
+class CustomBottomSheetDiposit extends StatefulWidget {
   const CustomBottomSheetDiposit({super.key});
 
   @override
+  State<CustomBottomSheetDiposit> createState() => _CustomBottomSheetDipositState();
+}
+
+class _CustomBottomSheetDipositState extends State<CustomBottomSheetDiposit> {
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    // Give focus to the textfield when bottom sheet opens
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _focusNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return  BlocConsumer<DepositCubit, DepositState>(
+    return BlocConsumer<DepositCubit, DepositState>(
       listener: (context, state) {
         if (state is DepositSuccess) {
-          GoRouter.of(context).push(Routes.dataDepositAndWithdraw,extra:  state.depositEntity);
+          GoRouter.of(context).push(Routes.dataDepositAndWithdraw, extra: state.depositEntity);
         }
       },
       builder: (context, state) {
@@ -53,6 +75,7 @@ class CustomBottomSheetDiposit extends StatelessWidget {
                 hintText: 'Enter Your Amount',
                 keyboardType: TextInputType.number,
                 controller: context.read<DepositCubit>().amountController,
+                focusNode: _focusNode, // ✅ add this
               ),
               SizedBox(height: 30.h),
               Row(
@@ -96,13 +119,15 @@ class CustomBottomSheetDiposit extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 14.h),
                         elevation: 0,
                       ),
-                      child:state is DepositLoading ? const CircularProgressIndicator(color: Colors.white,) : Text(
-                        'Confirm',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16.sp,
-                        ),
-                      ),
+                      child: state is DepositLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : Text(
+                              'Confirm',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16.sp,
+                              ),
+                            ),
                     ),
                   ),
                 ],
