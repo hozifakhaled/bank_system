@@ -4,7 +4,7 @@ import 'package:bank_system/features/home/domain/repositres/home_repositrey.dart
 import 'package:dartz/dartz.dart';
 
 class WithdarwUsecase {
-  final HomeRepository homeRepositiryImpli;
-  WithdarwUsecase(this.homeRepositiryImpli);
-  Future<Either<Failure, DepositEntity>> call(double amount) => homeRepositiryImpli.withdraw(amount);
+  final HomeRepository homeRepositiry;
+  WithdarwUsecase(this.homeRepositiry);
+  Future<Either<Failure, DepositEntity>> call(double amount) => homeRepositiry.withdraw(amount);
 }
