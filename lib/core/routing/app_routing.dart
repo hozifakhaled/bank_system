@@ -20,7 +20,7 @@ class AppRouting {
     routes: <GoRoute>[
       GoRoute(
         path: Routes.splah,
-        builder: (context, state) => const HomeCurrentView(),
+        builder: (context, state) => const SplashView(),
       ),
 
       GoRoute(
