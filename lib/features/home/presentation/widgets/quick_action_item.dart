@@ -14,7 +14,7 @@ class QuickActionItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String fullImageUrl = "http://10.0.2.2:8080$icon"; // ⬅️ حل المشكلة
+    final String fullImageUrl = "http://192.168.1.4:8080$icon"; // ⬅️ حل المشكلة
 
     return Column(
       children: [
