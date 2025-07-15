@@ -1,7 +1,9 @@
 import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/routing/routes.dart';
+import 'package:bank_system/features/home/domain/entites/deposit_entity.dart';
 import 'package:bank_system/features/home/presentation/pages/choice_account_type.dart';
 import 'package:bank_system/features/home/presentation/pages/home_current_view.dart';
+import 'package:bank_system/features/home/presentation/widgets/show_deposit_and_withdraw_data.dart';
 import 'package:bank_system/features/onboarding/presentation/pages/welcome_view.dart';
 import 'package:bank_system/features/splash/presentation/pages/splash_view.dart';
 import 'package:bank_system/features/user_auth/signup_user/presentation/cubit/signup_user_cubit.dart';
@@ -35,6 +37,10 @@ class AppRouting {
       GoRoute(
         path: Routes.choiceaccounttype,
         builder: (context, state) => const ChoiceAccountType(),
+      ),
+       GoRoute(
+        path: Routes.dataDepositAndWithdraw,
+        builder: (context, state) => ShowDepositAndWithdrawData (deposit: state.extra as DepositEntity,),
       ),
       GoRoute(path: Routes.choiceuser, builder: (context, state) => const ChoiceUser()),
       GoRoute(

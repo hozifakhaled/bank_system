@@ -1,15 +1,22 @@
+import 'package:bank_system/core/routing/routes.dart';
 import 'package:bank_system/core/widgets/custom_textfield.dart';
 import 'package:bank_system/features/home/presentation/manegar/deposit_cubit/cubit/deposit_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
-class CustomBottomSheet extends StatelessWidget {
-  const CustomBottomSheet({super.key});
+class CustomBottomSheetDiposit extends StatelessWidget {
+  const CustomBottomSheetDiposit({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<DepositCubit, DepositState>(
+    return  BlocConsumer<DepositCubit, DepositState>(
+      listener: (context, state) {
+        if (state is DepositSuccess) {
+          GoRouter.of(context).push(Routes.dataDepositAndWithdraw,extra:  state.depositEntity);
+        }
+      },
       builder: (context, state) {
         return Container(
           padding: EdgeInsets.all(20.w),
@@ -89,7 +96,7 @@ class CustomBottomSheet extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 14.h),
                         elevation: 0,
                       ),
-                      child: Text(
+                      child:state is DepositLoading ? const CircularProgressIndicator(color: Colors.white,) : Text(
                         'Confirm',
                         style: TextStyle(
                           fontWeight: FontWeight.w600,

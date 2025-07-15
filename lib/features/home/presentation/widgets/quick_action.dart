@@ -2,7 +2,8 @@ import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/themeing/colors.dart';
 import 'package:bank_system/features/home/presentation/manegar/deposit_cubit/cubit/deposit_cubit.dart';
 import 'package:bank_system/features/home/presentation/manegar/home_cubit/home_cubit.dart';
-import 'package:bank_system/features/home/presentation/widgets/custom_bottom_sheet.dart';
+import 'package:bank_system/features/home/presentation/widgets/custom_bottom_sheet_diposit.dart';
+import 'package:bank_system/features/home/presentation/widgets/custom_bottom_sheet_withdraw.dart';
 import 'package:bank_system/features/home/presentation/widgets/quick_action_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,7 +41,22 @@ class QuickActions extends StatelessWidget {
       ),
       builder: (context) => BlocProvider(
         create: (context) => sl<DepositCubit>(),
-        child: const CustomBottomSheet(),
+        child: const CustomBottomSheetDiposit(),
+      ),
+    );
+  }
+  if (index == 0) {
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) => BlocProvider(
+        create: (context) => sl<DepositCubit>(),
+        child: const CustomBottomSheetWithdraw(),
       ),
     );
   }

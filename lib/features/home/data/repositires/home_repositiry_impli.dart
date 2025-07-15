@@ -94,11 +94,6 @@ class HomeRepositiryImpli implements HomeRepository {
 
  
 @override
-  Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
-  final response = await dioConsumer.post(
-    path: Endpoints.deposit,
-    data: {"amount": amount},
-  );
 Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
   try {
     final result = await dioConsumer.post(
@@ -159,8 +154,30 @@ Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
         );
       },
       (response) {
-        final data = response.data;
-          return right(DepositModel.fromJson(data));
+         try {
+          final raw = response.data;
+
+          // تحقق من إذا كانت البيانات فاضية
+          if (raw == null || raw.toString().trim().isEmpty) {
+            throw ServerException(
+              ErrorModel(status: 500, errorMessage: "Empty response from server"),
+            );
+          }
+
+          // فك البيانات حسب النوع
+          final Map<String, dynamic> decoded = raw is String
+              ? json.decode(raw)
+              : raw as Map<String, dynamic>;
+
+          final deposit = DepositModel.fromJson(decoded);
+          return right(deposit);
+
+        } catch (e) {
+       
+          throw ServerException(
+            ErrorModel(status: 500, errorMessage: "Failed to parse response: $e"),
+          );
+        }
       },
     );
   }

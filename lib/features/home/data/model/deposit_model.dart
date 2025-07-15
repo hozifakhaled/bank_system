@@ -12,7 +12,7 @@ class DepositModel extends DepositEntity{
         
   factory DepositModel.fromJson(Map<String, dynamic> json) {
     return DepositModel(
-      depositId: json['depositId'] as int,
+      depositId: json['iid'] as int,
       amount: (json['amount'] as num).toDouble(),
       status: json['status'] as String,
       date: DateTime.parse(json['date']),
