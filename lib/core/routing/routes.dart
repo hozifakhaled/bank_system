@@ -7,6 +7,10 @@ class Routes {
     static const String balance = '/balance';
   static const String choiceaccounttype = '/choiceaccounttype';
     static const String dataDepositAndWithdraw = '/dataDepositAndWithdraw';
-
+   static const String accountOverview = '/accountOverview';
+   static const String navbar = '/navbar';
   static const String home = '/home';
+  static const String tranfer = '/tranfer';
+  static const String profile = '/profile';
+  static const String fixeddeposit = '/fixeddeposit';
 }

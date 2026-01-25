@@ -5,7 +5,7 @@ class AccountTypeCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final LinearGradient gradient;
-  final VoidCallback onTap;
+  final VoidCallback? onTap; // اختياري
 
   const AccountTypeCard({
     super.key,
@@ -13,7 +13,7 @@ class AccountTypeCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     required this.gradient,
-    required this.onTap,
+    this.onTap,
   });
 
   @override
@@ -41,7 +41,6 @@ class AccountTypeCard extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             child: Row(
               children: [
-                // Emoji Container with gradient background
                 Container(
                   width: 60,
                   height: 60,
@@ -64,7 +63,6 @@ class AccountTypeCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 20),
-                // Title and subtitle
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,7 +88,6 @@ class AccountTypeCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Arrow indicator
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(

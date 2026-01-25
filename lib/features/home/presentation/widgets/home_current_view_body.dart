@@ -1,8 +1,7 @@
 import 'package:bank_system/features/home/presentation/widgets/profile_in_home.dart';
-import 'package:bank_system/features/home/presentation/widgets/quick_action.dart';
-import 'package:bank_system/features/home/presentation/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'quick_action.dart';
+import 'transaction_item.dart';
 
 class HomeCurrentViewBody extends StatelessWidget {
   const HomeCurrentViewBody({super.key});
@@ -11,47 +10,37 @@ class HomeCurrentViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        // Profile
         SliverToBoxAdapter(
           child: Padding(
-            padding: EdgeInsets.all(20.w),
+            padding: const EdgeInsets.all(20.0),
             child: ColumnProfileHome(),
           ),
         ),
-
-        // Quick Actions Title
         SliverToBoxAdapter(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Text(
               "Quick Actions",
-              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
         ),
-
-        // Quick Actions List
-        SliverToBoxAdapter(child: QuickActions()),
-
-        // Recent Transactions Title
+        SliverToBoxAdapter(
+          child: QuickActions(), // بدون Bloc، يمكن وضع dummy list داخل QuickActions
+        ),
         SliverToBoxAdapter(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
             child: Text(
               "Recent Transactions",
-              style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ),
         ),
-
-        // Recent Transactions List
         SliverList(
-          delegate: SliverChildBuilderDelegate((
-            BuildContext context,
-            int index,
-          ) {
-            return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+          delegate: SliverChildBuilderDelegate(
+            (context, index) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5),
               child: TransactionItem(
                 title: "Monthly Salary",
                 date: "Yesterday • 9:00 AM",
@@ -60,11 +49,11 @@ class HomeCurrentViewBody extends StatelessWidget {
                 icon: Icons.check_circle,
                 iconColor: Colors.green,
               ),
-            );
-          }, childCount: 5),
+            ),
+            childCount: 5,
+          ),
         ),
       ],
     );
   }
 }
-

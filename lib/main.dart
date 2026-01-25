@@ -9,12 +9,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setup(); 
   // ✅ لازم يكون await لأن setup فيها Future
-  runApp(const MyApp());
+  runApp(const Banky());
 }
 
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Banky extends StatelessWidget {
+  const Banky({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp.router(
-      title: 'Bank System',
+      title: 'Banky',
      debugShowCheckedModeBanner: false,
       routerConfig:  AppRouting.router,
     ));
