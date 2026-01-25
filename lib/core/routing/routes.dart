@@ -13,4 +13,7 @@ class Routes {
   static const String tranfer = '/tranfer';
   static const String profile = '/profile';
   static const String fixeddeposit = '/fixeddeposit';
+  static const String deposit = '/deposit';
+  static const String withdraw = '/withdraw';
+  static const String islamicaccount = '/islamicaccount';
 }

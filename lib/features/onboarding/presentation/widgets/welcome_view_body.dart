@@ -253,7 +253,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                         curve: Curves.easeIn,
                       );
                     } else {
-                      GoRouter.of(context).push(Routes.fixeddeposit);
+                      GoRouter.of(context).push(Routes.islamicaccount);
                     }
                   },
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 const maincolor = Color(0xFF6366F1);
 
@@ -21,41 +22,68 @@ class AccountOverviewPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Balance Card
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: maincolor,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Available Balance",
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    "\$ 12,450.00",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Text(
-                    "Account Number",
-                    style: TextStyle(color: Colors.white70),
-                  ),
-                  Text(
-                    "**** **** **** 4589",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
+           // Balance Card with Show Balance Button
+Container(
+  width: double.infinity,
+  padding: const EdgeInsets.all(20),
+  decoration: BoxDecoration(
+    color: maincolor,
+    borderRadius: BorderRadius.circular(20),
+  ),
+  child: Stack(
+    children: [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          Text(
+            "Available Balance",
+            style: TextStyle(color: Colors.white70),
+          ),
+          SizedBox(height: 8),
+          Text(
+            "\$ 12,450.00",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
             ),
+          ),
+          SizedBox(height: 16),
+          Text(
+            "Account Number",
+            style: TextStyle(color: Colors.white70),
+          ),
+          Text(
+            "**** **** **** 4589",
+            style: TextStyle(color: Colors.white),
+          ),
+        ],
+      ),
+      Positioned(
+        top: 0,
+        right: 0,
+        child: ElevatedButton(
+          onPressed: () {
+          GoRouter.of(context).push('/balance');
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            foregroundColor: maincolor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          ),
+          child: const Text(
+            "Show Balance",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+      ),
+    ],
+  ),
+)
+,
 
             const SizedBox(height: 24),
 

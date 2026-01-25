@@ -1,29 +1,23 @@
-import 'package:bank_system/features/deposits/presentation/pages/deposit_view.dart';
-import 'package:bank_system/features/home/presentation/widgets/account_overview.dart';
+import 'package:bank_system/features/islamicaccount/presentation/pages/islamic_account_page.dart';
 import 'package:bank_system/features/profile/persentation/pages/profile_page.dart';
-import 'package:bank_system/features/tranferation/persentation/pages/transfer_view.dart';
-import 'package:bank_system/features/withdraws/presentation/pages/withdraw_view.dart';
 import 'package:flutter/material.dart';
 
 const maincolor = Color(0xFF6366F1);
 const unSelectedColor = Color(0xFF9CA3AF);
 
-class CustomNavbar extends StatefulWidget {
-  const CustomNavbar({super.key});
+class CustomIslamicNavbar extends StatefulWidget {
+  const CustomIslamicNavbar({super.key});
 
   @override
-  State<CustomNavbar> createState() => _CustomNavbarState();
+  State<CustomIslamicNavbar> createState() => _CustomIslamicNavbarState();
 }
 
-class _CustomNavbarState extends State<CustomNavbar> {
+class _CustomIslamicNavbarState extends State<CustomIslamicNavbar> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    AccountOverviewPage(),                  // Home
-    TransferView(),
-    DepositHomePage(),   
-     WithdrawHomePage(),               // Deposit
-      ProfilePage(),                     // Profile
+    IslamicAccountHomePage(),                      
+      ProfilePage(),                     
   ];
 
   @override
