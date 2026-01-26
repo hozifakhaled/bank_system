@@ -1,20 +1,26 @@
 import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/routing/routes.dart';
+import 'package:bank_system/core/widgets/custom_islamic_navbar.dart';
 import 'package:bank_system/core/widgets/custom_navbar.dart';
 import 'package:bank_system/features/deposits/presentation/pages/deposit_view.dart';
 import 'package:bank_system/features/fixeddeposits/persentation/pages/fixed_deposit_home_page.dart';
 import 'package:bank_system/features/home/data/model/deposit_model.dart';
-import 'package:bank_system/features/home/domain/entites/deposit_entity.dart';
+import 'package:bank_system/features/home/presentation/manegar/cubit/add_pdf_cubit.dart';
 import 'package:bank_system/features/home/presentation/pages/balane_view.dart';
 import 'package:bank_system/features/home/presentation/pages/choice_account_type.dart';
 import 'package:bank_system/features/home/presentation/pages/home_current_view.dart';
 import 'package:bank_system/features/home/presentation/widgets/account_overview.dart';
 import 'package:bank_system/features/home/presentation/widgets/show_deposit_and_withdraw_data.dart';
-import 'package:bank_system/features/onboarding/presentation/pages/welcome_view.dart';
-import 'package:bank_system/features/splash/presentation/pages/splash_view.dart';
+import 'package:bank_system/features/islamicaccount/presentation/pages/islamic_account_page.dart';
+import 'package:bank_system/features/onboarding/presentation/screens/welcome_screen.dart';
+import 'package:bank_system/features/profile/persentation/pages/profile_page.dart';
+import 'package:bank_system/features/splash/presentation/screens/splash_screen.dart';
+import 'package:bank_system/features/tranferation/persentation/pages/transfer_view.dart';
+import 'package:bank_system/features/user_auth/login_user/presentation/pages/login_screen.dart';
 import 'package:bank_system/features/user_auth/signup_user/presentation/cubit/signup_user_cubit.dart';
-import 'package:bank_system/features/user_auth/signup_user/presentation/pages/choice_user.dart';
-import 'package:bank_system/features/user_auth/signup_user/presentation/pages/signup_user_view.dart';
+import 'package:bank_system/features/user_auth/signup_user/presentation/screens/choice_user_screen.dart';
+import 'package:bank_system/features/user_auth/signup_user/presentation/screens/signup_user_screen.dart';
+import 'package:bank_system/features/withdraws/presentation/pages/withdraw_view.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -73,6 +79,7 @@ class AppRouting {
       GoRoute(path: Routes.deposit, builder: (context, state) =>  const DepositHomePage()),
       GoRoute(path: Routes.withdraw, builder: (context, state) =>  const WithdrawHomePage()),
       GoRoute(path: Routes.islamicaccount, builder: (context, state) =>  const IslamicAccountHomePage()),
+      GoRoute(path: Routes.customislamicnavbar, builder: (context, state) =>  const CustomIslamicNavbar()),
     ],
   );
 }

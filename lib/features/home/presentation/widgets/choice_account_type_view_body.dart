@@ -110,17 +110,7 @@ class ChoiceAccountTypeViewBody extends StatelessWidget {
                         end: Alignment.bottomRight,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    AccountTypeCard(
-                      emoji: '💰',
-                      title: 'Fixed Deposit',
-                      subtitle: 'Save money with higher interest rates',
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
-                        begin: Alignment.topRight,
-                        end: Alignment.bottomLeft,
-                      ),
-                    ),
+                   
                   ],
                 ),
               ),

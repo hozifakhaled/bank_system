@@ -1,3 +1,4 @@
+import 'package:bank_system/features/home/presentation/widgets/account_type_container.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -82,8 +83,19 @@ Container(
       ),
     ],
   ),
-)
-,
+),
+const SizedBox(height: 20),
+   const SizedBox(height: 20),
+                    AccountTypeCard(
+                      emoji: '💰',
+                      title: 'Fixed Deposit',
+                      subtitle: 'Save money with higher interest rates',
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                      ),
+                    ),
 
             const SizedBox(height: 24),
 

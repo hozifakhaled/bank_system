@@ -42,9 +42,6 @@ class _CustomIslamicNavbarState extends State<CustomIslamicNavbar> {
         child: Row(
           children: [
             Expanded(child: _buildNavItem(Icons.home_rounded, 'Home', 0)),
-            Expanded(child: _buildNavItem(Icons.send_rounded, 'Transfer', 1)),
-            Expanded(child: _buildNavItem(Icons.account_balance_wallet_rounded, 'Deposit', 2)),
-            Expanded(child: _buildNavItem(Icons.money_off_rounded, 'Withdraw', 3)),
             Expanded(child: _buildNavItem(Icons.person_rounded, 'Profile', 4)),
           ],
         ),
