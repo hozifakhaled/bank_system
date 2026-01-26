@@ -1,3 +1,4 @@
+import 'package:bank_system/core/widgets/shared_widget_in_accounts.dart';
 import 'package:bank_system/features/islamicaccount/presentation/widgets/halal_balanced_widget.dart';
 import 'package:bank_system/features/islamicaccount/presentation/widgets/islamic_account_details.dart';
 import 'package:bank_system/features/islamicaccount/presentation/widgets/islamic_services.dart';
@@ -29,7 +30,7 @@ class IslamicAccountHomePage extends StatelessWidget {
           children: const [
             HalalBalanceCard(),
             SizedBox(height: 24),
-            QuickActions(),
+            CategoriesBar(),
             SizedBox(height: 30),
             IslamicServicesSection(),
             SizedBox(height: 30),
@@ -39,58 +40,6 @@ class IslamicAccountHomePage extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-
-// ================= QUICK ACTIONS =================
-
-class QuickActions extends StatelessWidget {
-  const QuickActions({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text("Quick Actions",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const SizedBox(height: 12),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: const [
-            ActionItem(icon: Icons.send, label: "Transfer"),
-            ActionItem(icon: Icons.account_balance_wallet, label: "Top Up"),
-            ActionItem(icon: Icons.receipt_long, label: "Pay Bills"),
-            ActionItem(icon: Icons.credit_card, label: "Cards"),
-          ],
-        ),
-      ],
-    );
-  }
-}
-
-class ActionItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-
-  const ActionItem({super.key, required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(14)),
-          child: Icon(icon, color: mainColor),
-        ),
-        const SizedBox(height: 6),
-        Text(label, style: const TextStyle(fontSize: 12)),
-      ],
     );
   }
 }

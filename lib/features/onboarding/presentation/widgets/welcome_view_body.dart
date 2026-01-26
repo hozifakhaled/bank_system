@@ -375,7 +375,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                         curve: Curves.easeIn,
                       );
                     } else {
-                      GoRouter.of(context).push(Routes.accountOverview);
+                      GoRouter.of(context).push(Routes.customislamicnavbar);
                   //    GoRouter.of(context).push(Routes.choiceuser);
                     }
                   },

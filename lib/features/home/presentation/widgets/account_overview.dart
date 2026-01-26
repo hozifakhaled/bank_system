@@ -1,3 +1,4 @@
+import 'package:bank_system/core/widgets/shared_widget_in_accounts.dart';
 import 'package:bank_system/features/home/presentation/widgets/account_type_container.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -99,23 +100,7 @@ const SizedBox(height: 20),
 
             const SizedBox(height: 24),
 
-            // Quick Actions
-            const Text(
-              "Quick Actions",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                _ActionItem(icon: Icons.send, label: "Transfer"),
-                _ActionItem(icon: Icons.account_balance_wallet, label: "Top Up"),
-                _ActionItem(icon: Icons.receipt_long, label: "Pay Bills"),
-                _ActionItem(icon: Icons.credit_card, label: "Cards"),
-              ],
-            ),
-
+          CategoriesBar(),
             const SizedBox(height: 30),
 
             // Account Details
@@ -179,31 +164,7 @@ const SizedBox(height: 20),
   }
 }
 
-// Quick Action Item
-class _ActionItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
 
-  const _ActionItem({required this.icon, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.all(14),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(14),
-          ),
-          child: Icon(icon, color: maincolor),
-        ),
-        const SizedBox(height: 6),
-        Text(label, style: const TextStyle(fontSize: 12)),
-      ],
-    );
-  }
-}
 
 // Transaction Tile
 class _TransactionTile extends StatelessWidget {
