@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextformfield extends StatelessWidget {
   final String hintText;
@@ -14,10 +15,11 @@ class CustomTextformfield extends StatelessWidget {
   final Color? color;
   final Color? colorborder;
   final InputBorder? border;
- final int? minLines;
- final Widget? prefix;
+  final int? minLines;
+  final Widget? prefix;
   final Widget? prefixIcon;
   final FocusNode? focusNode;
+ final List<TextInputFormatter>? inputFormatters;
   const CustomTextformfield({
     super.key,
     this.prefix,
@@ -34,7 +36,9 @@ class CustomTextformfield extends StatelessWidget {
     this.hintStyle,
     this.color,
     this.colorborder,
-    this.border, this.minLines, this.focusNode,
+    this.border,
+    this.minLines,
+    this.focusNode, this.inputFormatters,
   });
 
   @override
@@ -42,6 +46,7 @@ class CustomTextformfield extends StatelessWidget {
     final inputBorder = border ?? buildBorder();
 
     return TextFormField(
+      inputFormatters: [],
       focusNode: focusNode,
       minLines: maxLines,
       controller: controller,
@@ -53,7 +58,7 @@ class CustomTextformfield extends StatelessWidget {
       maxLines: obscureText == true ? 1 : maxLines,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
-        prefix:prefix,
+        prefix: prefix,
         hintStyle: hintStyle,
         suffixIcon: suffixIcon,
         suffixIconColor: const Color(0xFFC9CECF),
@@ -69,8 +74,10 @@ class CustomTextformfield extends StatelessWidget {
 
   OutlineInputBorder buildBorder() {
     return OutlineInputBorder(
-      borderSide:
-          BorderSide(width: 1.5, color: colorborder ?? const Color(0xFFC9CECF)),
+      borderSide: BorderSide(
+        width: 1.5,
+        color: colorborder ?? const Color(0xFFC9CECF),
+      ),
       borderRadius: BorderRadius.circular(10),
     );
   }

@@ -15,6 +15,8 @@ class _GenderDropdownState extends State<GenderDropdown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
+      focusColor: Colors.white,
+      dropdownColor: Colors.white,
       value: selectedGender,
       items: const [
         DropdownMenuItem(value: 'MALE', child: Text('MALE')),

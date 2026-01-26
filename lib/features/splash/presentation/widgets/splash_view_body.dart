@@ -1,4 +1,4 @@
-import 'package:bank_system/core/themeing/colors.dart';
+import 'package:bank_system/features/splash/presentation/widgets/main_section_splash_view.dart';
 import 'package:flutter/material.dart';
 
 class SplashViewBody extends StatefulWidget {
@@ -18,7 +18,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
   late Animation<double> circleAnimation;
   late Animation<double> pulseAnimation;
 
-  final String bankText = 'BANKY';
+
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
       vsync: this,
     );
 
-    for (int i = 0; i < bankText.length; i++) {
+    for (int i = 0; i < 'BANKY'.length; i++) {
       double start = (i * 0.15).clamp(0.0, 1.0);
       double end = (start + 0.3).clamp(0.0, 1.0);
 
@@ -82,93 +82,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          AnimatedBuilder(
-            animation: _circleController,
-            builder: (context, child) {
-              return Transform.scale(
-                scale: circleAnimation.value,
-                child: Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.3),
-                      width: 2,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: maincolor,
-                        blurRadius: 20,
-                        spreadRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: Center(
-                    child: Icon(
-                      Icons.account_balance,
-                      size: 40,
-                      color: Colors.white.withOpacity(0.8),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-          const SizedBox(height: 40),
-          AnimatedBuilder(
-            animation: _pulseController,
-            builder: (context, child) {
-              return Transform.scale(
-                scale: pulseAnimation.value,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: List.generate(
-                    bankText.length,
-                    (index) => AnimatedBuilder(
-                      animation: letterAnimations[index],
-                      builder: (context, child) {
-                        return Transform.translate(
-                          offset: Offset(
-                            0,
-                            50 * (1 - letterAnimations[index].value),
-                          ),
-                          child: Opacity(
-                            opacity: letterAnimations[index].value.clamp(
-                              0.0,
-                              1.0,
-                            ),
-                            child: Text(
-                              bankText[index],
-                              style: TextStyle(
-                                fontSize: 50,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                letterSpacing: 2,
-                                shadows: [
-                                  Shadow(
-                                    color: Colors.blue.withOpacity(0.5),
-                                    blurRadius: 10,
-                                    offset: const Offset(0, 0),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ],
-      ),
-    );
+    return MainSection(circleController: _circleController, circleAnimation: circleAnimation, pulseController: _pulseController, pulseAnimation: pulseAnimation, letterAnimations: letterAnimations);
   }
 }
+

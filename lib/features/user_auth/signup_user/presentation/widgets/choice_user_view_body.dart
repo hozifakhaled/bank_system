@@ -85,7 +85,7 @@ class ChoiceUserViewBody extends StatelessWidget {
                 children: [
                   RoleCard(
                     icon: Icons.person_outline,
-                    title: 'User',
+                    title: 'signup User ',
                     subtitle: 'For individual banking services',
                     gradient: const LinearGradient(
                       colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
@@ -96,6 +96,21 @@ class ChoiceUserViewBody extends StatelessWidget {
                      GoRouter.of(context).push(Routes.signupasuser);
                     },
                   ),
+                  const SizedBox(height: 20),
+                            RoleCard(
+                    icon: Icons.person_outline,
+                    title: 'login User',
+                    subtitle: 'For individual banking services',
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    onTap: () {
+                     GoRouter.of(context).push(Routes.login);
+                    },
+                  ),
+            
                 ],
               ),
             ),

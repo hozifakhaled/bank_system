@@ -17,13 +17,14 @@ class SignupUserCubit extends Cubit<SignupUserState> {
   final TextEditingController password = TextEditingController();
   final TextEditingController phoneNumber = TextEditingController();
   final TextEditingController nationalId = TextEditingController();
+    final TextEditingController pinCode = TextEditingController();
   final TextEditingController dateOfBirth = TextEditingController();
   final TextEditingController city= TextEditingController();
   final TextEditingController zipCode = TextEditingController();
   final TextEditingController gender = TextEditingController();
   final TextEditingController maritalStatus = TextEditingController();
-
-  Future<void> signupUser(SignupUserModel signupUserModel) async {
+final formKey = GlobalKey<FormState>();
+  Future<void> signupUser(SignupRequestModel signupUserModel) async {
     emit(SignupUserLoading());
     final response = await signupUserUsecase.signupUser(signupUserModel);
     response.fold(

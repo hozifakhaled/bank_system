@@ -15,6 +15,7 @@ import 'package:bank_system/features/home/data/model/deposit_model.dart';
 import 'package:bank_system/features/home/domain/entites/accounts_entity.dart';
 import 'package:bank_system/features/home/domain/repositres/home_repositrey.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/src/form_data.dart';
 
 class HomeRepositiryImpli implements HomeRepository {
   final NetworkInfo networkInfo;
@@ -22,7 +23,8 @@ class HomeRepositiryImpli implements HomeRepository {
   final DioConsumer dioConsumer;
   final CategoriesDataSourceLocal local;
 
-  HomeRepositiryImpli(this.dioConsumer, {
+  HomeRepositiryImpli(
+    this.dioConsumer, {
     required this.networkInfo,
     required this.remote,
     required this.local,
@@ -34,10 +36,10 @@ class HomeRepositiryImpli implements HomeRepository {
       try {
         // أولاً نحاول جلب البيانات من الـ remote
         final remoteModel = await remote.getAllCategories();
-        
+
         // نحفظ البيانات في الـ cache
         await local.cacheCategories(remoteModel);
-        
+
         return right(remoteModel);
       } on ServerException {
         // إذا فشل الـ remote، نحاول الـ local
@@ -58,7 +60,9 @@ class HomeRepositiryImpli implements HomeRepository {
       unawaited(_updateCategories()); // لا تؤثر على النتيجة مباشرةً
       return right(localCate);
     } catch (e) {
-      return left(Failure(errMessage: 'لا يوجد اتصال بالإنترنت ولا توجد بيانات محفوظة'));
+      return left(
+        Failure(errMessage: 'لا يوجد اتصال بالإنترنت ولا توجد بيانات محفوظة'),
+      );
     }
   }
 
@@ -87,106 +91,115 @@ class HomeRepositiryImpli implements HomeRepository {
       },
       (response) {
         final data = response.data;
-          return right(AccountModel.fromJson(data));
+        return right(AccountModel.fromJson(data));
       },
     );
   }
 
- 
-@override
-Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
-  try {
-    final result = await dioConsumer.post(
-      path: Endpoints.deposit,
-      data: {"amount": amount},
-    );
+  @override
+  Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
+    try {
+      final result = await dioConsumer.post(
+        path: Endpoints.deposit,
+        data: {"amount": amount},
+      );
 
-    return result.fold(
-      (error) {
-        throw ServerException(
-          ErrorModel(status: 500, errorMessage: "Failed: $error"),
-        );
-      },
-      (response) {
-        try {
-          final raw = response.data;
+      return result.fold(
+        (error) {
+          throw ServerException(
+            ErrorModel(status: 500, errorMessage: "Failed: $error"),
+          );
+        },
+        (response) {
+          try {
+            final raw = response.data;
 
-          // تحقق من إذا كانت البيانات فاضية
-          if (raw == null || raw.toString().trim().isEmpty) {
+            // تحقق من إذا كانت البيانات فاضية
+            if (raw == null || raw.toString().trim().isEmpty) {
+              throw ServerException(
+                ErrorModel(
+                  status: 500,
+                  errorMessage: "Empty response from server",
+                ),
+              );
+            }
+
+            // فك البيانات حسب النوع
+            final Map<String, dynamic> decoded = raw is String
+                ? json.decode(raw)
+                : raw as Map<String, dynamic>;
+
+            final deposit = DepositModel.fromJson(decoded);
+            return right(deposit);
+          } catch (e) {
+            print("Error parsing response: $e");
+            print("Raw response: ${response.data}");
             throw ServerException(
-              ErrorModel(status: 500, errorMessage: "Empty response from server"),
+              ErrorModel(
+                status: 500,
+                errorMessage: "Failed to parse response: $e",
+              ),
             );
           }
-
-          // فك البيانات حسب النوع
-          final Map<String, dynamic> decoded = raw is String
-              ? json.decode(raw)
-              : raw as Map<String, dynamic>;
-
-          final deposit = DepositModel.fromJson(decoded);
-          return right(deposit);
-
-        } catch (e) {
-          print("Error parsing response: $e");
-          print("Raw response: ${response.data}");
-          throw ServerException(
-            ErrorModel(status: 500, errorMessage: "Failed to parse response: $e"),
-          );
-        }
-      },
-    );
-  } catch (e) {
-    print("General error in createDeposit: $e");
-    return left(Failure(errMessage: e.toString()));
+        },
+      );
+    } catch (e) {
+      print("General error in createDeposit: $e");
+      return left(Failure(errMessage: e.toString()));
+    }
   }
-}
 
   @override
-  Future<Either<Failure, DepositModel>> withdraw(double amount) async{
+  Future<Either<Failure, DepositModel>> withdraw(double amount) async {
     try {
-  final response = await dioConsumer.post(
-    path: Endpoints.withdraw,
-    data: {"amount": amount},
-  );
-  return response.fold(
-     (error) {
-        throw ServerException(
-          ErrorModel(status: 500, errorMessage: "Failed: $error"),
-        );
-      },
-    (response) {
-       try {
-        final raw = response.data;
-  
-        // تحقق من إذا كانت البيانات فاضية
-        if (raw == null || raw.toString().trim().isEmpty) {
+      final response = await dioConsumer.post(
+        path: Endpoints.withdraw,
+        data: {"amount": amount},
+      );
+      return response.fold(
+        (error) {
           throw ServerException(
-            ErrorModel(status: 500, errorMessage: "Empty response from server"),
+            ErrorModel(status: 500, errorMessage: "Failed: $error"),
           );
-        }
-  
-        // فك البيانات حسب النوع
-        final Map<String, dynamic> decoded = raw is String
-            ? json.decode(raw)
-            : raw as Map<String, dynamic>;
-  
-        final withdraw = DepositModel.fromJson(decoded);
-        return right(withdraw);
-  
-      } catch (e) {
-         
-          throw ServerException(
-            ErrorModel(status: 500, errorMessage: "Failed to parse response: $e"),
-          );
-        }
-    },
-  );
-}  catch (e) {
-    return left(Failure(errMessage: e.toString()));}
+        },
+        (response) {
+          try {
+            final raw = response.data;
+
+            // تحقق من إذا كانت البيانات فاضية
+            if (raw == null || raw.toString().trim().isEmpty) {
+              throw ServerException(
+                ErrorModel(
+                  status: 500,
+                  errorMessage: "Empty response from server",
+                ),
+              );
+            }
+
+            // فك البيانات حسب النوع
+            final Map<String, dynamic> decoded = raw is String
+                ? json.decode(raw)
+                : raw as Map<String, dynamic>;
+
+            final withdraw = DepositModel.fromJson(decoded);
+            return right(withdraw);
+          } catch (e) {
+            throw ServerException(
+              ErrorModel(
+                status: 500,
+                errorMessage: "Failed to parse response: $e",
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      return left(Failure(errMessage: e.toString()));
+    }
   }
-  
+
   @override
-  Future<Either<Failure, double>> balance() async{
+  Future<Either<Failure, double>> balance() async {
     final response = await dioConsumer.get(path: Endpoints.balance);
     return response.fold(
       (error) {
@@ -201,6 +214,27 @@ Future<Either<Failure, DepositModel>> createDeposit(double amount) async {
     );
   }
 
-  
+  @override
+  Future<Either<Failure, String>> sendPdf(FormData formData) async {
+    try {
+  final response = await dioConsumer.post(
+    isFormData: true,
+    path: Endpoints.sendPdf,
+    data: formData,
+  );
+  return response.fold(
+    (error) {
+      throw ServerException(
+        ErrorModel(status: 500, errorMessage: "Failed: $error"),
+      );
+    },
+    (response) {
+      final data = response.data;
+      return right(data);
+    },
+  );
+}  catch (e) {
+  return left(Failure(errMessage: e.toString()));
 }
-
+  }
+}

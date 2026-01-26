@@ -3,6 +3,7 @@ import 'package:bank_system/features/home/domain/entites/accounts_entity.dart';
 import 'package:bank_system/features/home/domain/entites/category_entiey.dart';
 import 'package:bank_system/features/home/domain/entites/deposit_entity.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 
 abstract class HomeRepository {
   Future<Either<Failure, List<CategoryEntity>>> getCategories();
@@ -10,5 +11,5 @@ abstract class HomeRepository {
   Future<Either<Failure, DepositEntity>> createDeposit(double amount);
   Future<Either<Failure, DepositEntity>> withdraw(double amount);
   Future<Either<Failure, double>> balance();
-
+  Future<Either<Failure, String>> sendPdf(FormData formData);
 }

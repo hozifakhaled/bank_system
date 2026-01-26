@@ -6,5 +6,6 @@ class Endpoints {
   static const String deposit = "api/deposits/createDeposit";
   static const String withdraw = "api/Withdraw";
     static const String balance = "api/accounts/balance";
-
+    static const String sendPdf = "api/uploadpdf";
+static const String loginUser = "api/login";
 }
