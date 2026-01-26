@@ -353,71 +353,35 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                 },
               ),
 
-              // Enhanced bottom button
-              Positioned(
-                bottom: 30.h,
-                left: 24.w,
-                right: 24.w,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.r),
-                    gradient: LinearGradient(
-                      colors: [
-                        maincolor,
-                        maincolor.withOpacity(0.8),
-                      ],
+            // Bottom Next button
+            Positioned(
+              bottom: 30.h,
+              left: 20.w,
+              right: 20.w,
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 15.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: maincolor.withOpacity(0.4),
-                        blurRadius: 20,
-                        offset: Offset(0, 10),
-                        spreadRadius: 0,
-                      ),
-                    ],
+                    backgroundColor: maincolor,
                   ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-                        if (currentIndex < pages.length - 1) {
-                          pageController.nextPage(
-                            duration: Duration(milliseconds: 400),
-                            curve: Curves.easeInOut,
-                          );
-                        } else {
-                          GoRouter.of(context).push(Routes.choiceuser);
-                        }
-                      },
-                      borderRadius: BorderRadius.circular(16.r),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 18.h),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              currentIndex == pages.length - 1
-                                  ? "Get Started"
-                                  : "Next",
-                              style: TextStyle(
-                                fontSize: 18.sp,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            SizedBox(width: 8.w),
-                            Icon(
-                              currentIndex == pages.length - 1
-                                  ? Icons.arrow_forward_rounded
-                                  : Icons.arrow_forward_ios_rounded,
-                              color: Colors.white,
-                              size: 20.sp,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                  onPressed: () {
+                    if (currentIndex < pages.length - 1) {
+                      pageController.nextPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                      );
+                    } else {
+                      GoRouter.of(context).push(Routes.choiceuser);
+                    }
+                  },
+
+                  child: Text(
+                    currentIndex == pages.length - 1 ? "Start" : "Next",
+                    style: TextStyle(fontSize: 18.sp, color: Colors.white),
                   ),
                 ),
               ),
