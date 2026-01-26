@@ -8,5 +8,5 @@ class SignupUserUsecase {
   final SignupUserRepository signupUserRepository;
   SignupUserUsecase({required this.signupUserRepository});
 
-  Future<Either<Failure, SignupUserResponseEntity>> signupUser(SignupUserModel signupUserModel) => signupUserRepository.signupUser(signupUserModel );
+  Future<Either<Failure, SignupUserResponseEntity>> signupUser(SignupRequestModel signupUserModel) => signupUserRepository.signupUser(signupUserModel );
 }

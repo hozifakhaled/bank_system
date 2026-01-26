@@ -1,8 +1,8 @@
 import 'package:bank_system/features/onboarding/presentation/widgets/welcome_view_body.dart';
 import 'package:flutter/material.dart';
 
-class WelcomeView extends StatelessWidget {
-  const WelcomeView({super.key});
+class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,5 +4,5 @@ import 'package:bank_system/features/user_auth/signup_user/domain/entities/signu
 import 'package:dartz/dartz.dart';
 
 abstract class SignupUserRepository {
-  Future<Either<Failure, SignupUserResponseEntity>> signupUser(SignupUserModel signupUserModel);
+  Future<Either<Failure, SignupUserResponseEntity>> signupUser(SignupRequestModel signupUserModel);
 }

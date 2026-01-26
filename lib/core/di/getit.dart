@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bank_system/core/connections/network_info.dart';
 import 'package:bank_system/core/databases/api/dio_consumer.dart';
 import 'package:bank_system/core/databases/api/interceptors.dart';
@@ -10,11 +12,15 @@ import 'package:bank_system/features/home/domain/usecases/add_account_usecase.da
 import 'package:bank_system/features/home/domain/usecases/balance_usecase.dart';
 import 'package:bank_system/features/home/domain/usecases/category_usecase.dart';
 import 'package:bank_system/features/home/domain/usecases/deposit_usecase.dart';
+import 'package:bank_system/features/home/domain/usecases/upload_pdf_usecase.dart';
 import 'package:bank_system/features/home/domain/usecases/withdarw_usecase.dart';
 import 'package:bank_system/features/home/presentation/manegar/add_account_cubit/add_account_cubit.dart';
-import 'package:bank_system/features/home/presentation/manegar/cubit/balance_cubit.dart';
+import 'package:bank_system/features/home/presentation/manegar/balance_cubit/balance_cubit.dart';
+import 'package:bank_system/features/home/presentation/manegar/cubit/add_pdf_cubit.dart';
 import 'package:bank_system/features/home/presentation/manegar/deposit_cubit/cubit/deposit_cubit.dart';
 import 'package:bank_system/features/home/presentation/manegar/home_cubit/home_cubit.dart';
+import 'package:bank_system/features/user_auth/login_user/data/repositories/login_repo.dart';
+import 'package:bank_system/features/user_auth/login_user/presentation/cubit/login_user_cubit.dart';
 import 'package:bank_system/features/user_auth/signup_user/data/repositories/signup_user_repository_impli.dart';
 import 'package:bank_system/features/user_auth/signup_user/domain/repositories/signup_user_repositry.dart';
 import 'package:bank_system/features/user_auth/signup_user/domain/usecases/signup_user_usecase.dart';
@@ -47,6 +53,9 @@ Future<void> setup() async {
   sl.registerLazySingleton<SignupUserRepository>(
     () => SignupUserRepositoryImpli(dioConsumer: sl()),
   );
+  sl.registerLazySingleton<LoginRepo>(
+    () => LoginRepo(dioConsumer: sl()),
+  );
 
   sl.registerLazySingleton<CategoriesDataSourceLocal>(
     () => CategoriesDataSourceLocal(cache: sl()), // الآن CacheHelper موجود
@@ -68,7 +77,9 @@ Future<void> setup() async {
 
     sl.registerLazySingleton(() => DepositUsecase( sl()));
         sl.registerLazySingleton(() => BalanceUsecase(homeRepositiry:  sl()));
+        sl.registerLazySingleton(() => UploadPdfUsecase(  sl()));
 
+  sl.registerFactory(() => LoginUserCubit(sl()));
 
   sl.registerFactory(() => HomeCubit(sl()));
   sl.registerFactory(() => AddAccountCubit(sl()));
@@ -79,5 +90,7 @@ Future<void> setup() async {
 
    sl.registerFactory(() => DepositCubit(sl(),sl()));
       sl.registerFactory(() => BalanceCubit(sl()));
+            sl.registerFactory(() => AddPdfCubit(sl()));
+
 
 }

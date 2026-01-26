@@ -1,6 +1,6 @@
 import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/widgets/custom_button.dart';
-import 'package:bank_system/features/home/presentation/manegar/cubit/balance_cubit.dart';
+import 'package:bank_system/features/home/presentation/manegar/balance_cubit/balance_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
