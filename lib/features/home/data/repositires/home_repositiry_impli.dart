@@ -11,10 +11,11 @@ import 'package:bank_system/features/home/data/datasource/categories_data_source
 import 'package:bank_system/features/home/data/datasource/categories_data_source_remote.dart';
 import 'package:bank_system/features/home/data/model/account_model.dart';
 import 'package:bank_system/features/home/data/model/category_model.dart';
-import 'package:bank_system/features/home/data/model/deposit_model.dart';
+import 'package:bank_system/features/deposits/data/models/deposit_model.dart';
 import 'package:bank_system/features/home/domain/entites/accounts_entity.dart';
 import 'package:bank_system/features/home/domain/repositres/home_repositrey.dart';
 import 'package:dartz/dartz.dart';
+// ignore: implementation_imports
 import 'package:dio/src/form_data.dart';
 
 class HomeRepositiryImpli implements HomeRepository {

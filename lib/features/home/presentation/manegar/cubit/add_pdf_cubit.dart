@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:bank_system/features/home/data/model/deposit_model.dart';
-import 'package:bank_system/features/home/domain/usecases/upload_pdf_usecase.dart';
+import 'package:bank_system/features/deposits/data/models/deposit_model.dart';
+import 'package:bank_system/features/deposits/domian/usecase/upload_pdf_usecase.dart';
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';

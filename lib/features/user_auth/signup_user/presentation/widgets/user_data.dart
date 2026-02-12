@@ -57,6 +57,7 @@ class UserData extends StatelessWidget {
           const SizedBox(height: 20),
           CustomTextformfield(
             validator: (p0) {
+              return
               Validators.email(p0);
             },
             hintText: 'Email',

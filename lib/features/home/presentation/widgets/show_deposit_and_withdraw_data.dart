@@ -1,4 +1,4 @@
-import 'package:bank_system/features/home/data/model/deposit_model.dart';
+import 'package:bank_system/features/deposits/data/models/deposit_model.dart';
 import 'package:bank_system/features/home/presentation/manegar/cubit/add_pdf_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,7 +31,7 @@ class _ShowDepositAndWithdrawDataState
   }
 
   Future<void> _requestPermission() async {
-    var currentStatus = await Permission.storage.status;
+    
     final status = await Permission.storage.request();
 
     if (!status.isGranted && mounted) {

@@ -8,4 +8,7 @@ class Endpoints {
     static const String balance = "api/accounts/balance";
     static const String sendPdf = "api/uploadpdf";
 static const String loginUser = "api/login";
+static  String  getProile (String email)=>"api/getProfile/$email";
+
+
 }

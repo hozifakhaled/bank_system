@@ -48,6 +48,7 @@ class FixedDepositHomePage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(
+                      // ignore: deprecated_member_use
                       color: Colors.black.withOpacity(0.03),
                       blurRadius: 10,
                       offset: const Offset(0, 5))

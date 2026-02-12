@@ -90,6 +90,7 @@ class ChoiceAccountTypeViewBody extends StatelessWidget {
                 child: Column(
                   children: [
                     AccountTypeCard(
+                      
                       emoji: '💳',
                       title: 'Current Account',
                       subtitle: 'For daily transactions and payments',

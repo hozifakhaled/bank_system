@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 const maincolor = Color(0xFF6366F1);
@@ -25,6 +27,7 @@ class FDPlanCardWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
+              // ignore: deprecated_member_use
               color: Colors.black.withOpacity(0.03),
               blurRadius: 10,
               offset: const Offset(0, 5))
@@ -103,7 +106,7 @@ void _showOpenFDModal(BuildContext context, String duration, String interest, St
               child: ElevatedButton(
                 onPressed: () {
                   // هنا تضيف عملية إنشاء FD
-                  print('FD Opened: ${amountController.text} for $duration');
+                  log('FD Opened: ${amountController.text} for $duration');
                   Navigator.pop(context);
                 },
                 style: ElevatedButton.styleFrom(

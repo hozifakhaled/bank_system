@@ -1,4 +1,4 @@
-import 'package:bank_system/features/home/domain/entites/deposit_entity.dart';
+import 'package:bank_system/features/deposits/domian/entiites/deposit_entity.dart';
 
 class DepositModel extends DepositEntity{
   DepositModel({

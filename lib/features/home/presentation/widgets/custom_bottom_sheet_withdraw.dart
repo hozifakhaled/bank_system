@@ -1,6 +1,6 @@
 import 'package:bank_system/core/routing/routes.dart';
 import 'package:bank_system/core/widgets/custom_textfield.dart';
-import 'package:bank_system/features/home/presentation/manegar/deposit_cubit/cubit/deposit_cubit.dart';
+import 'package:bank_system/features/deposits/presentation/manger/deposit_cubit/cubit/deposit_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -83,12 +83,7 @@ class CustomBottomSheetWithdraw extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
-                        final amountText = context
-                            .read<DepositCubit>()
-                            .amountController
-                            .text;
-                        final amount = double.tryParse(amountText) ?? 0.0;
-                        context.read<DepositCubit>().withdraw(amount);
+                      
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: const Color(0xFF6366F1),

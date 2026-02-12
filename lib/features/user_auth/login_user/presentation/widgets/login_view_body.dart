@@ -30,7 +30,15 @@ class LoginBodyView extends StatelessWidget {
             ),
           );
           CacheHelper.sharedPreferences.setString('token', state.loginResponseModel.token);
-          GoRouter.of(context).go(Routes.home);
+          CacheHelper.sharedPreferences.setString('email', context.read<LoginUserCubit>().emailController.text.trim());
+CacheHelper.sharedPreferences.setInt(
+  'pincode',
+  int.parse(
+    context.read<LoginUserCubit>().pinController.text.trim(),
+  ),
+);
+
+          GoRouter.of(context).go(Routes.navbar);
         }
       },
       builder: (context, state) {

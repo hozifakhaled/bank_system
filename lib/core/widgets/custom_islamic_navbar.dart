@@ -33,6 +33,7 @@ class _CustomIslamicNavbarState extends State<CustomIslamicNavbar> {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
+              // ignore: deprecated_member_use
               color: Colors.black.withOpacity(0.06),
               blurRadius: 20,
               offset: const Offset(0, 10),
@@ -67,6 +68,7 @@ class _CustomIslamicNavbarState extends State<CustomIslamicNavbar> {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         constraints: const BoxConstraints(maxHeight: 70),
         decoration: BoxDecoration(
+          // ignore: deprecated_member_use
           color: isSelected ? maincolor.withOpacity(0.12) : Colors.transparent,
           borderRadius: BorderRadius.circular(18),
         ),

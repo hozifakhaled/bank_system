@@ -20,3 +20,15 @@ final class DepositSuccess extends DepositState {
   final DepositEntity depositEntity;
   const DepositSuccess(this.depositEntity);
 }
+
+final class BalanceLoading extends DepositState {}
+
+final class BalanceError extends DepositState {
+  final String errMessage;
+  const BalanceError({required this.errMessage});
+}
+
+final class BalanceLoaded extends DepositState {
+  final double balance;
+  const BalanceLoaded({required this.balance});
+}

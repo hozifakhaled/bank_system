@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'dart:io';
 import 'dart:async';
@@ -16,8 +18,9 @@ class NetworkInfoImpl implements NetworkInfo {
     try {
       final connectivityResult = await connectivity.checkConnectivity();
 
+      // ignore: unrelated_type_equality_checks
       if (connectivityResult == ConnectivityResult.none) {
-        print("🚫 لا يوجد اتصال بالشبكة (WiFi أو بيانات)");
+        log("🚫 لا يوجد اتصال بالشبكة (WiFi أو بيانات)");
         return false;
       }
 
@@ -27,20 +30,20 @@ class NetworkInfoImpl implements NetworkInfo {
             .timeout(const Duration(seconds: 3));
 
         if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-          print("✅ الإنترنت متصل فعليًا");
+          log("✅ الإنترنت متصل فعليًا");
           return true;
         } else {
-          print("⚠️ لا يوجد استجابة من google.com رغم وجود شبكة");
+          log("⚠️ لا يوجد استجابة من google.com رغم وجود شبكة");
           return false;
         }
       } catch (e) {
-        print("⚠️ فشل التحقق من الإنترنت (google.com): $e");
+        log("⚠️ فشل التحقق من الإنترنت (google.com): $e");
         // احتمال نرجع true أو false هنا حسب ما تحب:
         // return true; // لتجاوز المشكلة مؤقتًا
         return false;
       }
     } catch (e) {
-      print("❌ خطأ في التحقق من الاتصال: $e");
+      log("❌ خطأ في التحقق من الاتصال: $e");
       return false;
     }
   }
