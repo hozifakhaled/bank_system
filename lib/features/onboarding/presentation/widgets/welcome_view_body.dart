@@ -376,6 +376,7 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                       ),
                     ],
                   ),
+
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
@@ -418,14 +419,16 @@ class _WelcomeViewBodyState extends State<WelcomeViewBody>
                         ),
                       ),
                     ),
+                
 
                   ),
                 ),
               ),
-            ],
+           ] ),
+            
           ),
         ),
-      ),
-    );
+      )
+    ;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bank_system/core/di/getit.dart';
 import 'package:bank_system/core/routing/routes.dart';
+import 'package:bank_system/core/widgets/custom_islamic_navbar.dart';
 import 'package:bank_system/core/widgets/custom_navbar.dart';
 import 'package:bank_system/features/deposits/presentation/pages/deposit_view.dart';
 import 'package:bank_system/features/fixeddeposits/persentation/pages/fixed_deposit_home_page.dart';
@@ -78,6 +79,7 @@ class AppRouting {
       GoRoute(path: Routes.deposit, builder: (context, state) =>  const DepositView()),
       GoRoute(path: Routes.withdraw, builder: (context, state) =>   WithdrawHomePage()),
       GoRoute(path: Routes.islamicaccount, builder: (context, state) =>  const IslamicAccountHomePage()),
+      GoRoute(path: Routes.customislamicnavbar, builder: (context, state) =>  const CustomIslamicNavbar()),
     ],
   );
 }

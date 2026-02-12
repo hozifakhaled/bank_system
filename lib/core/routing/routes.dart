@@ -17,4 +17,5 @@ class Routes {
   static const String deposit = '/deposit';
   static const String withdraw = '/withdraw';
   static const String islamicaccount = '/islamicaccount';
+  static const String customislamicnavbar = '/customislamicnavbar';
 }
